@@ -3,370 +3,404 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blazecloud | Premium Store</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Blazecloud | Premium Minecraft Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
-            --primary-green: #00b894;
-            --dark-green: #008f72;
-            --light-green: #e3fdf5;
-            --bg-white: #f8f9fa;
-            --text-dark: #2d3436;
-            --text-gray: #636e72;
-            --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            --primary: #00C851;   /* RankKar Green */
+            --primary-dark: #007E33;
+            --bg-body: #F4F6F8;
+            --bg-white: #FFFFFF;
+            --text-main: #212529;
+            --text-light: #6c757d;
+            --shadow: 0 4px 12px rgba(0,0,0,0.05);
+            --radius: 12px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
+        body { background-color: var(--bg-body); color: var(--text-main); }
+        
+        a { text-decoration: none; color: inherit; }
 
-        body {
-            background-color: var(--bg-white);
-            color: var(--text-dark);
-        }
-
-        /* --- NAVBAR --- */
-        nav {
-            background: white;
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        /* --- HEADER --- */
+        header {
+            background: var(--bg-white);
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            padding: 15px 0;
         }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        .navbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 700;
-            color: var(--text-dark);
+            color: var(--text-main);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
+        .logo i { color: var(--primary); }
 
-        .logo span { color: var(--primary-green); }
-
-        .nav-links {
-            display: flex;
-            gap: 25px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-gray);
-            font-weight: 500;
-            transition: 0.3s;
-        }
-
-        .nav-links a:hover { color: var(--primary-green); }
-
-        .btn-login {
-            background: var(--light-green);
-            color: var(--primary-green);
-            padding: 8px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .btn-login:hover {
-            background: var(--primary-green);
-            color: white;
-        }
-
-        /* --- HERO SECTION --- */
-        .hero {
-            background: linear-gradient(135deg, #e3fdf5 0%, #ffffff 100%);
-            text-align: center;
-            padding: 60px 20px;
-            margin-bottom: 40px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            color: var(--text-dark);
-        }
-
-        .hero p {
-            color: var(--text-gray);
+        /* --- SEARCH BAR (RankKar Style) --- */
+        .search-wrapper {
+            flex: 1;
             max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .search-container {
-            margin-top: 30px;
             position: relative;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
-        .search-input {
+        .search-bar {
             width: 100%;
-            padding: 15px 20px;
+            padding: 12px 20px;
             padding-right: 50px;
-            border: 2px solid #eee;
+            border: 1px solid #e0e0e0;
             border-radius: 50px;
-            outline: none;
-            font-size: 1rem;
+            background: #f8f9fa;
+            font-size: 0.95rem;
             transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            outline: none;
         }
 
-        .search-input:focus {
-            border-color: var(--primary-green);
+        .search-bar:focus {
+            background: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0, 200, 81, 0.1);
         }
 
-        .search-icon {
+        .search-btn {
             position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--primary-green);
-        }
-
-        /* --- GRID --- */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px 60px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        /* --- CARDS --- */
-        .card {
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid #f0f0f0;
-            position: relative;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--card-shadow);
-            border-color: var(--primary-green);
-        }
-
-        .badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: #ffeaa7;
-            color: #d35400;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            z-index: 10;
-        }
-
-        .card-img-container {
-            height: 180px;
-            background: #f1f2f6;
+            right: 5px;
+            top: 5px;
+            height: 38px;
+            width: 38px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        /* --- NAV LINKS --- */
+        .nav-links { display: flex; align-items: center; gap: 25px; font-weight: 500; font-size: 0.95rem; }
+        .nav-links a:hover { color: var(--primary); }
+        
+        .nav-btn {
+            background: var(--text-main);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            transition: 0.3s;
         }
+        .nav-btn:hover { background: var(--primary); }
 
-        /* If no image, fallback icon */
-        .card-icon { font-size: 4rem; color: #dfe6e9; }
+        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; }
 
-        .card-body { padding: 20px; }
-
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .features {
-            list-style: none;
-            margin: 10px 0 20px;
-        }
-
-        .features li {
-            font-size: 0.85rem;
-            color: var(--text-gray);
-            margin-bottom: 5px;
+        /* --- HERO SLIDER --- */
+        .hero {
+            background: linear-gradient(135deg, #00C851 0%, #007E33 100%);
+            color: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            margin-top: 25px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
         }
 
-        .features li i { color: var(--primary-green); font-size: 0.8rem; }
+        .hero-text h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 10px; }
+        .hero-text p { opacity: 0.9; margin-bottom: 20px; font-size: 1.1rem; }
+        .hero-btn {
+            background: white;
+            color: var(--primary-dark);
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-block;
+        }
 
+        /* --- CATEGORIES --- */
+        .section-title { font-size: 1.4rem; font-weight: 600; margin: 40px 0 20px; border-left: 5px solid var(--primary); padding-left: 15px; }
+
+        /* --- PRODUCTS GRID --- */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .product-card {
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            border: 1px solid #eee;
+            overflow: hidden;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
+        }
+
+        .product-img-box {
+            height: 160px;
+            background: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .product-img { width: 100%; height: 100%; object-fit: cover; }
+        .placeholder-icon { font-size: 4rem; color: #adb5bd; }
+
+        .badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #ffeb3b;
+            color: #333;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .card-details { padding: 20px; }
+        
+        .card-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 5px; color: var(--text-main); }
+        
+        .stock-status { font-size: 0.8rem; color: #28a745; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; }
+        
         .price-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #f5f5f5;
+            margin-top: 10px;
         }
 
-        .price {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
+        .price { font-size: 1.3rem; font-weight: 700; color: var(--text-main); }
+        
         .btn-buy {
-            background: var(--primary-green);
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 8px;
+            background: var(--bg-body);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 8px 20px;
+            border-radius: 6px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.2s;
         }
 
-        .btn-buy:hover { background: var(--dark-green); }
+        .btn-buy:hover {
+            background: var(--primary);
+            color: white;
+        }
 
-        /* --- MOBILE --- */
+        /* --- MOBILE RESPONSIVE --- */
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero h1 { font-size: 1.8rem; }
+            .navbar { flex-wrap: wrap; }
+            .nav-links { display: none; width: 100%; flex-direction: column; padding: 20px 0; border-top: 1px solid #eee; }
+            .nav-links.active { display: flex; }
+            .search-wrapper { order: 3; max-width: 100%; margin-top: 10px; }
+            .mobile-toggle { display: block; }
+            .hero { text-align: center; flex-direction: column; padding: 30px 20px; }
+            .hero-text h1 { font-size: 1.8rem; }
         }
-
-        /* Loading State */
-        .loading {
-            text-align: center;
-            color: var(--text-gray);
-            font-size: 1.2rem;
-            margin-top: 50px;
-        }
+        
+        /* Loading Spinner */
+        .loading-state { text-align: center; padding: 50px; color: var(--text-light); }
+        .no-results { text-align: center; width: 100%; grid-column: 1/-1; display: none; padding: 20px; color: var(--text-light); }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo"><i class="fa-solid fa-cloud"></i> Blaze<span>cloud</span></div>
-        <div class="nav-links">
-            <a href="#">Home</a>
-            <a href="#">Products</a>
-            <a href="#">Support</a>
-        </div>
-        <a href="#" class="btn-login">Login</a>
-    </nav>
+    <header>
+        <div class="container navbar">
+            <a href="#" class="logo"><i class="fa-solid fa-cube"></i> Blazecloud</a>
+            
+            <div class="search-wrapper">
+                <input type="text" id="searchInput" class="search-bar" placeholder="Search for Minecraft accounts...">
+                <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
 
-    <div class="hero">
-        <h1>Premium Minecraft Store</h1>
-        <p>Instant delivery, secure payments, and the best prices in India.</p>
-        
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Search for accounts...">
-            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <div class="mobile-toggle" onclick="toggleMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+            <div class="nav-links" id="navLinks">
+                <a href="#">Home</a>
+                <a href="#">Shop</a>
+                <a href="#">Track Order</a>
+                <a href="#" class="nav-btn">Login</a>
+            </div>
         </div>
-    </div>
+    </header>
 
     <div class="container">
-        <div id="loading" class="loading">
-            <i class="fa-solid fa-circle-notch fa-spin"></i> Loading Products...
+        <div class="hero">
+            <div class="hero-text">
+                <h1>Level Up Your Game</h1>
+                <p>Get Premium Minecraft Accounts instantly at the best prices.</p>
+                <a href="#shop" class="hero-btn">Browse Shop</a>
+            </div>
+            <div style="font-size: 8rem; opacity: 0.3;">
+                <i class="fa-solid fa-gamepad"></i>
+            </div>
         </div>
 
-        <div class="grid" id="product-container"></div>
+        <h2 class="section-title" id="shop">Featured Products</h2>
+        
+        <div class="loading-state" id="loading">
+            <i class="fa-solid fa-spinner fa-spin fa-2x"></i><br><br>Loading Store...
+        </div>
+
+        <div class="products-grid" id="productsGrid">
+            </div>
+        
+        <div class="no-results" id="noResults">
+            <h3>No products found matching your search.</h3>
+        </div>
+
     </div>
 
     <script>
-        async function fetchProducts() {
-            try {
-                // If hosted on Vercel, this fetches from your API
-                const response = await fetch('/api/products'); 
-                const products = await response.json();
-
-                const container = document.getElementById('product-container');
-                document.getElementById('loading').style.display = 'none';
-
-                if (products.length === 0) {
-                     // Fallback if DB is empty so site doesn't look broken
-                    renderFallback();
-                    return;
-                }
-
-                products.forEach(item => {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.innerHTML = `
-                        ${item.price < 300 ? '<div class="badge">HOT DEAL</div>' : ''}
-                        <div class="card-img-container">
-                             ${item.image ? `<img src="${item.image}" class="card-img">` : '<i class="fa-solid fa-cube card-icon"></i>'}
-                        </div>
-                        <div class="card-body">
-                            <h3 class="card-title">${item.name}</h3>
-                            <ul class="features">
-                                <li><i class="fa-solid fa-check"></i> Instant Delivery</li>
-                                <li><i class="fa-solid fa-shield-halved"></i> 100% Secure</li>
-                                <li><i class="fa-solid fa-envelope"></i> ${item.description || 'Full Access'}</li>
-                            </ul>
-                            <div class="price-row">
-                                <span class="price">₹${item.price}</span>
-                                <button class="btn-buy">Buy Now</button>
-                            </div>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
-
-            } catch (error) {
-                console.error("API Error or Local Testing:", error);
-                document.getElementById('loading').style.display = 'none';
-                renderFallback(); // Show dummy data if API fails
-            }
+        // 1. MOBILE MENU TOGGLE
+        function toggleMenu() {
+            const nav = document.getElementById('navLinks');
+            nav.classList.toggle('active');
         }
 
-        // Dummy data function for testing immediately without DB
-        function renderFallback() {
-            const container = document.getElementById('product-container');
-            const dummyData = [
-                { name: "Minecraft Full Access", price: 450, desc: "Migrated, Mail Access", img: "https://placehold.co/600x400/00b894/FFF?text=Full+Access" },
-                { name: "Name Changeable", price: 250, desc: "Clean History", img: "https://placehold.co/600x400/00b894/FFF?text=NFA" },
-                { name: "Optifine Cape", price: 300, desc: "Cape Key", img: "https://placehold.co/600x400/00b894/FFF?text=Cape" },
-            ];
+        // 2. DATA HANDLING (Supports Vercel API or Fallback)
+        let allProducts = [];
 
-            dummyData.forEach(item => {
+        async function initStore() {
+            const grid = document.getElementById('productsGrid');
+            const loading = document.getElementById('loading');
+
+            try {
+                // Try fetching from your Vercel backend
+                // If you are just testing HTML, this will fail and jump to 'catch'
+                const response = await fetch('/api/products'); 
+                if (!response.ok) throw new Error("API not found");
+                allProducts = await response.json();
+                
+                // If DB is empty, use manual data
+                if (allProducts.length === 0) throw new Error("Empty DB");
+
+            } catch (error) {
+                console.log("Using local data (Vercel API not connected or empty)");
+                // FALLBACK DATA (RankKar Style)
+                allProducts = [
+                    { 
+                        name: "Minecraft Full Access", 
+                        price: 450, 
+                        category: "minecraft",
+                        image: "https://placehold.co/400x300/2ecc71/ffffff?text=Full+Access",
+                        desc: "Migrated • Mail Access"
+                    },
+                    { 
+                        name: "Minecraft Name Change", 
+                        price: 250, 
+                        category: "minecraft",
+                        image: "https://placehold.co/400x300/3498db/ffffff?text=Name+Change",
+                        desc: "Change Nickname • Secure"
+                    },
+                    { 
+                        name: "Optifine Cape Key", 
+                        price: 300, 
+                        category: "cape",
+                        image: "https://placehold.co/400x300/f1c40f/ffffff?text=Cape+Key",
+                        desc: "Global Activation"
+                    },
+                    { 
+                        name: "Valorant Random Skin", 
+                        price: 99, 
+                        category: "valorant",
+                        image: "https://placehold.co/400x300/ff4757/ffffff?text=Valorant",
+                        desc: "1-10 Skins Guaranteed"
+                    },
+                    { 
+                        name: "Minecraft NFA (Bulk)", 
+                        price: 10, 
+                        category: "minecraft",
+                        image: "https://placehold.co/400x300/95a5a6/ffffff?text=NFA+Bulk",
+                        desc: "Non-Full Access • Cheap"
+                    }
+                ];
+            }
+
+            loading.style.display = 'none';
+            renderProducts(allProducts);
+        }
+
+        // 3. RENDER FUNCTION
+        function renderProducts(products) {
+            const grid = document.getElementById('productsGrid');
+            const noResults = document.getElementById('noResults');
+            
+            grid.innerHTML = '';
+            
+            if (products.length === 0) {
+                noResults.style.display = 'block';
+                return;
+            } else {
+                noResults.style.display = 'none';
+            }
+
+            products.forEach(product => {
                 const card = document.createElement('div');
-                card.className = 'card';
+                card.className = 'product-card';
                 card.innerHTML = `
-                    <div class="card-img-container">
-                        <img src="${item.img}" class="card-img">
+                    <div class="badge">INSTANT</div>
+                    <div class="product-img-box">
+                        <img src="${product.image}" alt="${product.name}" class="product-img">
                     </div>
-                    <div class="card-body">
-                        <h3 class="card-title">${item.name}</h3>
-                        <ul class="features">
-                            <li><i class="fa-solid fa-check"></i> Instant Delivery</li>
-                            <li><i class="fa-solid fa-shield-halved"></i> 100% Secure</li>
-                            <li><i class="fa-solid fa-envelope"></i> ${item.desc}</li>
-                        </ul>
+                    <div class="card-details">
+                        <h3 class="card-title">${product.name}</h3>
+                        <div class="stock-status">
+                            <i class="fa-solid fa-bolt"></i> Instant Delivery
+                        </div>
+                        <p style="font-size:0.8rem; color:#888;">${product.desc || product.description || ''}</p>
                         <div class="price-row">
-                            <span class="price">₹${item.price}</span>
-                            <button class="btn-buy">Buy Now</button>
+                            <div class="price">₹${product.price}</div>
+                            <button class="btn-buy" onclick="alert('Redirecting to Payment Gateway...')">Buy Now</button>
                         </div>
                     </div>
                 `;
-                container.appendChild(card);
+                grid.appendChild(card);
             });
         }
 
-        fetchProducts();
+        // 4. WORKING SEARCH BAR
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('keyup', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = allProducts.filter(product => 
+                product.name.toLowerCase().includes(term) || 
+                (product.desc && product.desc.toLowerCase().includes(term))
+            );
+            renderProducts(filtered);
+        });
+
+        // Start the app
+        initStore();
+
     </script>
 </body>
 </html>
