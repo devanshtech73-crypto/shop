@@ -3,404 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blazecloud | Premium Minecraft Store</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <title>Store | Blazecloud</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #00C851;   /* RankKar Green */
-            --primary-dark: #007E33;
-            --bg-body: #F4F6F8;
-            --bg-white: #FFFFFF;
-            --text-main: #212529;
-            --text-light: #6c757d;
-            --shadow: 0 4px 12px rgba(0,0,0,0.05);
-            --radius: 12px;
+            --bg: #ffffff;
+            --text: #111111;
+            --gray: #f5f5f7;
+            --border: #e1e1e1;
+            --accent: #000000;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         
-        body { background-color: var(--bg-body); color: var(--text-main); }
-        
-        a { text-decoration: none; color: inherit; }
+        body { background: var(--bg); color: var(--text); padding-bottom: 50px; }
 
-        /* --- HEADER --- */
+        /* HEADER */
         header {
-            background: var(--bg-white);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 15px 0;
-        }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-        .navbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-
-        .logo {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--text-main);
+            padding: 20px 40px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 8px;
-        }
-        .logo i { color: var(--primary); }
-
-        /* --- SEARCH BAR (RankKar Style) --- */
-        .search-wrapper {
-            flex: 1;
-            max-width: 600px;
-            position: relative;
+            border-bottom: 1px solid var(--border);
         }
 
-        .search-bar {
-            width: 100%;
-            padding: 12px 20px;
-            padding-right: 50px;
-            border: 1px solid #e0e0e0;
-            border-radius: 50px;
-            background: #f8f9fa;
-            font-size: 0.95rem;
-            transition: 0.3s;
-            outline: none;
-        }
-
-        .search-bar:focus {
-            background: #fff;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(0, 200, 81, 0.1);
-        }
-
-        .search-btn {
-            position: absolute;
-            right: 5px;
-            top: 5px;
-            height: 38px;
-            width: 38px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* --- NAV LINKS --- */
-        .nav-links { display: flex; align-items: center; gap: 25px; font-weight: 500; font-size: 0.95rem; }
-        .nav-links a:hover { color: var(--primary); }
+        .brand { font-weight: 600; font-size: 1.1rem; letter-spacing: -0.5px; }
         
-        .nav-btn {
-            background: var(--text-main);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            transition: 0.3s;
-        }
-        .nav-btn:hover { background: var(--primary); }
+        .cart-link { font-size: 0.9rem; color: #666; text-decoration: none; }
 
-        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; }
-
-        /* --- HERO SLIDER --- */
+        /* HERO */
         .hero {
-            background: linear-gradient(135deg, #00C851 0%, #007E33 100%);
-            color: white;
-            border-radius: var(--radius);
-            padding: 40px;
-            margin-top: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-            overflow: hidden;
+            padding: 80px 20px;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .hero-text h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 10px; }
-        .hero-text p { opacity: 0.9; margin-bottom: 20px; font-size: 1.1rem; }
-        .hero-btn {
-            background: white;
-            color: var(--primary-dark);
-            padding: 10px 25px;
-            border-radius: 8px;
-            font-weight: 600;
-            display: inline-block;
-        }
+        .hero h1 { font-size: 2.5rem; letter-spacing: -1px; margin-bottom: 10px; font-weight: 600; }
+        .hero p { color: #666; font-size: 1rem; }
 
-        /* --- CATEGORIES --- */
-        .section-title { font-size: 1.4rem; font-weight: 600; margin: 40px 0 20px; border-left: 5px solid var(--primary); padding-left: 15px; }
-
-        /* --- PRODUCTS GRID --- */
-        .products-grid {
+        /* GRID */
+        .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 25px;
-            margin-bottom: 50px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
 
-        .product-card {
-            background: var(--bg-white);
-            border-radius: var(--radius);
-            border: 1px solid #eee;
-            overflow: hidden;
-            transition: 0.3s;
-            position: relative;
+        .product {
+            transition: opacity 0.2s;
         }
+        .product:hover { opacity: 0.8; }
 
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow);
-            border-color: var(--primary);
-        }
-
-        .product-img-box {
-            height: 160px;
-            background: #e9ecef;
+        .img-box {
+            background: var(--gray);
+            height: 250px;
+            border-radius: 4px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
+            overflow: hidden;
         }
         
-        .product-img { width: 100%; height: 100%; object-fit: cover; }
-        .placeholder-icon { font-size: 4rem; color: #adb5bd; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        .badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: #ffeb3b;
-            color: #333;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 700;
-        }
+        .details { display: flex; justify-content: space-between; align-items: flex-start; }
+        
+        .name { font-weight: 500; font-size: 1rem; margin-bottom: 4px; }
+        .desc { font-size: 0.85rem; color: #666; }
+        
+        .price { font-weight: 500; font-size: 1rem; }
 
-        .card-details { padding: 20px; }
-        
-        .card-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 5px; color: var(--text-main); }
-        
-        .stock-status { font-size: 0.8rem; color: #28a745; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; }
-        
-        .price-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 10px;
+        /* BUTTON (Invisible Hitbox) */
+        .product-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
-        .price { font-size: 1.3rem; font-weight: 700; color: var(--text-main); }
-        
-        .btn-buy {
-            background: var(--bg-body);
-            color: var(--primary);
-            border: 1px solid var(--primary);
-            padding: 8px 20px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .btn-buy:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* --- MOBILE RESPONSIVE --- */
-        @media (max-width: 768px) {
-            .navbar { flex-wrap: wrap; }
-            .nav-links { display: none; width: 100%; flex-direction: column; padding: 20px 0; border-top: 1px solid #eee; }
-            .nav-links.active { display: flex; }
-            .search-wrapper { order: 3; max-width: 100%; margin-top: 10px; }
-            .mobile-toggle { display: block; }
-            .hero { text-align: center; flex-direction: column; padding: 30px 20px; }
-            .hero-text h1 { font-size: 1.8rem; }
-        }
-        
-        /* Loading Spinner */
-        .loading-state { text-align: center; padding: 50px; color: var(--text-light); }
-        .no-results { text-align: center; width: 100%; grid-column: 1/-1; display: none; padding: 20px; color: var(--text-light); }
+        /* Loading */
+        .loading { text-align: center; color: #999; margin-top: 50px; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="container navbar">
-            <a href="#" class="logo"><i class="fa-solid fa-cube"></i> Blazecloud</a>
-            
-            <div class="search-wrapper">
-                <input type="text" id="searchInput" class="search-bar" placeholder="Search for Minecraft accounts...">
-                <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
-
-            <div class="mobile-toggle" onclick="toggleMenu()">
-                <i class="fa-solid fa-bars"></i>
-            </div>
-
-            <div class="nav-links" id="navLinks">
-                <a href="#">Home</a>
-                <a href="#">Shop</a>
-                <a href="#">Track Order</a>
-                <a href="#" class="nav-btn">Login</a>
-            </div>
-        </div>
+        <div class="brand">Blazecloud.</div>
+        <a href="#" class="cart-link">Bag (0)</a>
     </header>
 
-    <div class="container">
-        <div class="hero">
-            <div class="hero-text">
-                <h1>Level Up Your Game</h1>
-                <p>Get Premium Minecraft Accounts instantly at the best prices.</p>
-                <a href="#shop" class="hero-btn">Browse Shop</a>
-            </div>
-            <div style="font-size: 8rem; opacity: 0.3;">
-                <i class="fa-solid fa-gamepad"></i>
-            </div>
-        </div>
-
-        <h2 class="section-title" id="shop">Featured Products</h2>
-        
-        <div class="loading-state" id="loading">
-            <i class="fa-solid fa-spinner fa-spin fa-2x"></i><br><br>Loading Store...
-        </div>
-
-        <div class="products-grid" id="productsGrid">
-            </div>
-        
-        <div class="no-results" id="noResults">
-            <h3>No products found matching your search.</h3>
-        </div>
-
+    <div class="hero">
+        <h1>Digital Essentials.</h1>
+        <p>Premium Minecraft accounts delivered instantly to your inbox.</p>
     </div>
 
+    <div id="loading" class="loading">Loading products...</div>
+
+    <div class="grid" id="grid">
+        </div>
+
     <script>
-        // 1. MOBILE MENU TOGGLE
-        function toggleMenu() {
-            const nav = document.getElementById('navLinks');
-            nav.classList.toggle('active');
-        }
-
-        // 2. DATA HANDLING (Supports Vercel API or Fallback)
-        let allProducts = [];
-
-        async function initStore() {
-            const grid = document.getElementById('productsGrid');
-            const loading = document.getElementById('loading');
-
+        async function load() {
             try {
-                // Try fetching from your Vercel backend
-                // If you are just testing HTML, this will fail and jump to 'catch'
-                const response = await fetch('/api/products'); 
-                if (!response.ok) throw new Error("API not found");
-                allProducts = await response.json();
-                
-                // If DB is empty, use manual data
-                if (allProducts.length === 0) throw new Error("Empty DB");
+                // Try fetching from Vercel backend
+                let products;
+                try {
+                    const res = await fetch('/api/products');
+                    products = await res.json();
+                    if(!products.length) throw new Error();
+                } catch {
+                    // Fallback Data if API fails
+                    products = [
+                        { id: 1, name: "Minecraft Full Access", price: 450, desc: "Migrated / Mail Access", img: "https://placehold.co/400x400/f5f5f7/111?text=FA" },
+                        { id: 2, name: "Name Change Account", price: 250, desc: "Custom Nickname", img: "https://placehold.co/400x400/f5f5f7/111?text=NFA" },
+                        { id: 3, name: "Optifine Cape", price: 300, desc: "Cape Key", img: "https://placehold.co/400x400/f5f5f7/111?text=Cape" }
+                    ];
+                }
 
-            } catch (error) {
-                console.log("Using local data (Vercel API not connected or empty)");
-                // FALLBACK DATA (RankKar Style)
-                allProducts = [
-                    { 
-                        name: "Minecraft Full Access", 
-                        price: 450, 
-                        category: "minecraft",
-                        image: "https://placehold.co/400x300/2ecc71/ffffff?text=Full+Access",
-                        desc: "Migrated • Mail Access"
-                    },
-                    { 
-                        name: "Minecraft Name Change", 
-                        price: 250, 
-                        category: "minecraft",
-                        image: "https://placehold.co/400x300/3498db/ffffff?text=Name+Change",
-                        desc: "Change Nickname • Secure"
-                    },
-                    { 
-                        name: "Optifine Cape Key", 
-                        price: 300, 
-                        category: "cape",
-                        image: "https://placehold.co/400x300/f1c40f/ffffff?text=Cape+Key",
-                        desc: "Global Activation"
-                    },
-                    { 
-                        name: "Valorant Random Skin", 
-                        price: 99, 
-                        category: "valorant",
-                        image: "https://placehold.co/400x300/ff4757/ffffff?text=Valorant",
-                        desc: "1-10 Skins Guaranteed"
-                    },
-                    { 
-                        name: "Minecraft NFA (Bulk)", 
-                        price: 10, 
-                        category: "minecraft",
-                        image: "https://placehold.co/400x300/95a5a6/ffffff?text=NFA+Bulk",
-                        desc: "Non-Full Access • Cheap"
-                    }
-                ];
+                document.getElementById('loading').style.display = 'none';
+                const grid = document.getElementById('grid');
+
+                products.forEach(p => {
+                    // We pass data to checkout.html via URL parameters
+                    const link = `checkout.html?product=${encodeURIComponent(p.name)}&price=${p.price}`;
+                    
+                    grid.innerHTML += `
+                        <a href="${link}" class="product-link">
+                            <div class="product">
+                                <div class="img-box"><img src="${p.image || p.img}" alt=""></div>
+                                <div class="details">
+                                    <div>
+                                        <div class="name">${p.name}</div>
+                                        <div class="desc">${p.desc || p.description}</div>
+                                    </div>
+                                    <div class="price">₹${p.price}</div>
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                });
+
+            } catch (e) {
+                console.log(e);
             }
-
-            loading.style.display = 'none';
-            renderProducts(allProducts);
         }
-
-        // 3. RENDER FUNCTION
-        function renderProducts(products) {
-            const grid = document.getElementById('productsGrid');
-            const noResults = document.getElementById('noResults');
-            
-            grid.innerHTML = '';
-            
-            if (products.length === 0) {
-                noResults.style.display = 'block';
-                return;
-            } else {
-                noResults.style.display = 'none';
-            }
-
-            products.forEach(product => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.innerHTML = `
-                    <div class="badge">INSTANT</div>
-                    <div class="product-img-box">
-                        <img src="${product.image}" alt="${product.name}" class="product-img">
-                    </div>
-                    <div class="card-details">
-                        <h3 class="card-title">${product.name}</h3>
-                        <div class="stock-status">
-                            <i class="fa-solid fa-bolt"></i> Instant Delivery
-                        </div>
-                        <p style="font-size:0.8rem; color:#888;">${product.desc || product.description || ''}</p>
-                        <div class="price-row">
-                            <div class="price">₹${product.price}</div>
-                            <button class="btn-buy" onclick="alert('Redirecting to Payment Gateway...')">Buy Now</button>
-                        </div>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        // 4. WORKING SEARCH BAR
-        const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('keyup', (e) => {
-            const term = e.target.value.toLowerCase();
-            const filtered = allProducts.filter(product => 
-                product.name.toLowerCase().includes(term) || 
-                (product.desc && product.desc.toLowerCase().includes(term))
-            );
-            renderProducts(filtered);
-        });
-
-        // Start the app
-        initStore();
-
+        load();
     </script>
 </body>
 </html>
