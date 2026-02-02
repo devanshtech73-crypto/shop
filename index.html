@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blazecloud | Crafting Something Epic</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff6a00;
+            --secondary: #ee0979;
+            --bg: #0f0c29;
+            --text: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            overflow: hidden;
+        }
+
+        /* Animated Background Elements */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 1;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 3s ease-in-out infinite alternate;
+            margin-bottom: 10px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            opacity: 0.8;
+            margin-bottom: 40px;
+        }
+
+        /* Minecraft-inspired Progress Bar */
+        .progress-container {
+            width: 300px;
+            height: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 65%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            animation: slide 2s ease-in-out infinite;
+        }
+
+        /* Floating Animation */
+        .floating-box {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 10px rgba(255, 106, 0, 0.2)); }
+            to { filter: drop-shadow(0 0 30px rgba(255, 106, 0, 0.6)); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes slide {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(200%); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Footer links */
+        .socials {
+            margin-top: 50px;
+        }
+
+        .socials a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 0.8rem;
+            opacity: 0.6;
+            transition: 0.3s;
+        }
+
+        .socials a:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="floating-box">
+            <div class="status-badge">RELOADING CHUNKS...</div>
+            <h1 class="logo">Blazecloud</h1>
+            <h2>The ultimate Minecraft marketplace.</h2>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+        <p style="margin-top: 15px; font-size: 0.8rem; color: #888;">Leveling up to 100%</p>
+
+        <div class="socials">
+            <a href="#">DISCORD</a>
+            <a href="#">TWITTER</a>
+            <a href="#">SUPPORT</a>
+        </div>
+    </div>
+
+</body>
+</html>
