@@ -1,64 +1,251 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <title>BlazeCloud Store</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: white;
-    }
-    header {
-      padding: 20px;
-      text-align: center;
-      background: #1e293b;
-      font-size: 24px;
-      font-weight: bold;
-    }
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      padding: 20px;
-    }
-    .card {
-      background: #1e293b;
-      padding: 15px;
-      border-radius: 10px;
-      text-align: center;
-    }
-    footer {
-      background: #1e293b;
-      padding: 20px;
-      text-align: center;
-    }
-    a { color: #60a5fa; text-decoration: none; margin: 0 10px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlazeCloud | Premium Digital Store</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --brand-fire: #ff4d00;
+            --brand-cloud: #00d2ff;
+        }
+        .blaze-gradient {
+            background: linear-gradient(135deg, var(--brand-fire), #ff9100);
+        }
+        .cloud-glass {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .blaze-card:hover {
+            box-shadow: 0 0 20px rgba(255, 77, 0, 0.3);
+            border-color: var(--brand-fire);
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+        }
+    </style>
 </head>
-<body>
+<body class="min-h-screen bg-[#0f172a] text-slate-200">
 
-<header>BlazeCloud Store</header>
+    <nav class="navbar cloud-glass sticky top-0 z-[100] px-4 md:px-12">
+        <div class="flex-1">
+            <div class="flex items-center gap-3 group cursor-pointer">
+                <div class="p-2 blaze-gradient rounded-xl rotate-3 group-hover:rotate-12 transition-transform">
+                    <i class="fa-solid fa-cloud-bolt text-white text-xl"></i>
+                </div>
+                <span class="text-2xl font-black tracking-tighter text-white">BLAZE<span class="text-[#00d2ff]">CLOUD</span></span>
+            </div>
+        </div>
+        <div class="flex-none gap-2">
+            <button onclick="showSection('shop')" class="btn btn-ghost btn-sm text-cloud font-bold">Store</button>
+            <button onclick="showSection('admin')" class="btn btn-sm btn-outline border-orange-500 text-orange-500 hover:bg-orange-500">Admin Panel</button>
+        </div>
+    </nav>
 
-<div class="products">
-  <div class="card">
-    <h3>Game Account</h3>
-    <p>$5</p>
-  </div>
-  <div class="card">
-    <h3>Game Key</h3>
-    <p>$10</p>
-  </div>
-</div>
+    <header id="hero" class="relative py-16 overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full opacity-10 pointer-events-none">
+            <div class="absolute top-0 w-96 h-96 bg-orange-600 rounded-full blur-[100px]"></div>
+            <div class="absolute bottom-0 right-0 w-80 h-80 bg-cyan-500 rounded-full blur-[100px]"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 text-center animate__animated animate__fadeInDown">
+            <h1 class="text-6xl font-black italic mb-4">FUEL YOUR <span class="text-orange-500">GAMING</span></h1>
+            <p class="text-lg text-slate-400 max-w-2xl mx-auto">Instant delivery, 24/7 Support, and the hottest deals on the market.</p>
+        </div>
+    </header>
 
-<footer>
-  <a href="#">About</a>
-  <a href="https://discord.gg/HqgwG9Cr" target="_blank">Discord</a>
-  <a href="#">Help</a>
-  <a href="#">Pricing</a>
-  <p>© 2026 BlazeCloud</p>
-</footer>
+    <main id="shop-section" class="container mx-auto p-6">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+            <div class="tabs tabs-boxed bg-slate-900 border border-slate-800 p-1">
+                <a onclick="filterByCat('All')" class="tab tab-active cat-tab">All Items</a>
+                <a onclick="filterByCat('Minecraft')" class="tab cat-tab">Minecraft</a>
+                <a onclick="filterByCat('Nitro')" class="tab cat-tab">Discord</a>
+                <a onclick="filterByCat('Gaming')" class="tab cat-tab">Accounts</a>
+            </div>
+            <div class="relative w-full md:w-72">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 opacity-50"></i>
+                <input id="searchInput" onkeyup="searchItems()" type="text" placeholder="Search product..." class="input input-bordered w-full pl-12 bg-slate-900 focus:border-orange-500" />
+            </div>
+        </div>
 
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate__animated animate__fadeInUp">
+            </div>
+    </main>
+
+    <section id="admin-section" class="container mx-auto p-6 hidden">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold italic text-orange-500">Inventory Management</h2>
+            <button class="btn btn-success" onclick="openModal()"><i class="fa-solid fa-plus"></i> Add Item</button>
+        </div>
+        <div class="overflow-x-auto cloud-glass rounded-2xl">
+            <table class="table w-full">
+                <thead class="text-orange-500">
+                    <tr><th>Item Name</th><th>Price</th><th>Category</th><th>Actions</th></tr>
+                </thead>
+                <tbody id="admin-table-body"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <dialog id="product_modal" class="modal">
+        <div class="modal-box cloud-glass">
+            <h3 id="modal-title" class="text-xl font-bold mb-4">Edit Listing</h3>
+            <div class="space-y-4">
+                <input type="hidden" id="edit-id">
+                <input type="text" id="p-name" placeholder="Name" class="input input-bordered w-full bg-slate-800" />
+                <input type="text" id="p-price" placeholder="Price (e.g. 80rs)" class="input input-bordered w-full bg-slate-800" />
+                <select id="p-cat" class="select select-bordered w-full bg-slate-800">
+                    <option>Minecraft</option>
+                    <option>Nitro</option>
+                    <option>Streaming</option>
+                    <option>Gaming</option>
+                    <option>Boosts</option>
+                </select>
+            </div>
+            <div class="modal-action">
+                <button class="btn btn-ghost" onclick="product_modal.close()">Cancel</button>
+                <button class="btn btn-orange-500 bg-orange-600 text-white" onclick="saveProduct()">Save Changes</button>
+            </div>
+        </div>
+    </dialog>
+
+    <script>
+        // DATA INITIALIZATION
+        let products = JSON.parse(localStorage.getItem('blazecloud_data')) || [
+            { id: 1, name: "Minecraft Premium Temp", price: "30rs", cat: "Minecraft" },
+            { id: 2, name: "Minecraft Premium Perm", price: "80rs", cat: "Minecraft" },
+            { id: 3, name: "Minecraft Name Changeable", price: "250rs", cat: "Minecraft" },
+            { id: 4, name: "Crunchyroll 1 Month", price: "30rs", cat: "Streaming" },
+            { id: 5, name: "Xbox Game Pass Ultimate", price: "80rs", cat: "Gaming" },
+            { id: 6, name: "1 Month Nitro (ID)", price: "130rs", cat: "Nitro" },
+            { id: 7, name: "3 Month Nitro (ID)", price: "300rs", cat: "Nitro" },
+            { id: 8, name: "1 Month 14x Server Boosts", price: "400rs", cat: "Boosts" },
+            { id: 9, name: "Steam Random 5 Games", price: "30rs", cat: "Gaming" }
+        ];
+
+        function renderShop(data = products) {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = data.map(p => `
+                <div class="card bg-slate-900 border border-slate-800 blaze-card transition-all duration-300">
+                    <div class="card-body">
+                        <div class="flex justify-between">
+                            <span class="text-[10px] uppercase tracking-widest text-orange-500 font-bold">${p.cat}</span>
+                            <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                        </div>
+                        <h2 class="card-title text-white group-hover:text-orange-400 transition-colors">${p.name}</h2>
+                        <div class="flex items-center justify-between mt-6">
+                            <span class="text-2xl font-black text-white italic">₹${p.price.replace('rs', '')}</span>
+                            <button onclick="handleBuy('${p.name}')" class="btn btn-sm btn-primary blaze-gradient border-none text-white shadow-lg">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function handleBuy(name) {
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#ff4d00', '#00d2ff'] });
+            Swal.fire({
+                background: '#0f172a',
+                color: '#fff',
+                title: 'Great Choice!',
+                text: `You've selected ${name}. Proceed to checkout?`,
+                showCancelButton: true,
+                confirmButtonText: '<i class="fa-brands fa-whatsapp"></i> Buy via WhatsApp',
+                confirmButtonColor: '#25D366'
+            });
+        }
+
+        // ADMIN FUNCTIONS
+        function renderAdmin() {
+            const tbody = document.getElementById('admin-table-body');
+            tbody.innerHTML = products.map(p => `
+                <tr class="border-b border-slate-800">
+                    <td><span class="font-bold text-white">${p.name}</span></td>
+                    <td><span class="badge badge-outline border-orange-500 text-orange-500 font-bold">${p.price}</span></td>
+                    <td><span class="badge badge-ghost">${p.cat}</span></td>
+                    <td>
+                        <button class="btn btn-square btn-sm btn-ghost" onclick="editProduct(${p.id})"><i class="fa-solid fa-pen"></i></button>
+                        <button class="btn btn-square btn-sm btn-ghost text-error" onclick="deleteProduct(${p.id})"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filterByCat(cat) {
+            document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('tab-active'));
+            event.target.classList.add('tab-active');
+            const filtered = cat === 'All' ? products : products.filter(p => p.cat === cat);
+            renderShop(filtered);
+        }
+
+        function searchItems() {
+            const val = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = products.filter(p => p.name.toLowerCase().includes(val));
+            renderShop(filtered);
+        }
+
+        function showSection(sec) {
+            document.getElementById('shop-section').classList.toggle('hidden', sec === 'admin');
+            document.getElementById('hero').classList.toggle('hidden', sec === 'admin');
+            document.getElementById('admin-section').classList.toggle('hidden', sec === 'shop');
+            if(sec === 'admin') renderAdmin();
+        }
+
+        function openModal(id = null) {
+            const modal = document.getElementById('product_modal');
+            if(id) {
+                const p = products.find(x => x.id === id);
+                document.getElementById('edit-id').value = p.id;
+                document.getElementById('p-name').value = p.name;
+                document.getElementById('p-price').value = p.price;
+                document.getElementById('p-cat').value = p.cat;
+            } else {
+                document.getElementById('edit-id').value = "";
+                document.getElementById('p-name').value = "";
+                document.getElementById('p-price').value = "";
+            }
+            modal.showModal();
+        }
+
+        function saveProduct() {
+            const id = document.getElementById('edit-id').value;
+            const name = document.getElementById('p-name').value;
+            const price = document.getElementById('p-price').value;
+            const cat = document.getElementById('p-cat').value;
+
+            if(id) {
+                products = products.map(p => p.id == id ? {...p, name, price, cat} : p);
+            } else {
+                products.push({ id: Date.now(), name, price, cat });
+            }
+            
+            localStorage.setItem('blazecloud_data', JSON.stringify(products));
+            renderShop();
+            renderAdmin();
+            product_modal.close();
+            Swal.fire({ icon: 'success', title: 'Catalog Updated', background: '#0f172a', color: '#fff', timer: 1000, showConfirmButton: false });
+        }
+
+        function deleteProduct(id) {
+            products = products.filter(p => p.id !== id);
+            localStorage.setItem('blazecloud_data', JSON.stringify(products));
+            renderAdmin();
+            renderShop();
+        }
+
+        function editProduct(id) { openModal(id); }
+
+        // Boot
+        renderShop();
+    </script>
 </body>
 </html>
