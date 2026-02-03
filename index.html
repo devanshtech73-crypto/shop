@@ -2,403 +2,377 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BLAZECLOUD | Next-Gen Marketplace</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLAZECLOUD | Glass Marketplace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&family=Space+Grotesk:wght@300;700&display=swap" rel="stylesheet">
     
     <style>
-        /* BLAZECLOUD CORE STYLESHEET 
-           Designed for High-End PC and Mobile Responsiveness
-        */
         :root {
-            --blaze-orange: #ff4d00;
-            --blaze-glow: #ffae00;
-            --cyber-blue: #00f2ff;
-            --bg-deep: #020205;
-            --card-glass: rgba(15, 15, 25, 0.7);
-            --border-glow: rgba(255, 77, 0, 0.3);
-            --font-main: 'Rajdhani', sans-serif;
-            --font-header: 'Syncopate', sans-serif;
+            --primary: #ff5e00;
+            --secondary: #00f2ff;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-stroke: rgba(255, 255, 255, 0.12);
+            --bg: #03040a;
+            --accent-glow: radial-gradient(circle at 50% 50%, rgba(255, 94, 0, 0.15), transparent 70%);
         }
 
+        /* --- GLOBAL & ANIMATION --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background: var(--bg-deep);
-            color: #fff;
-            font-family: var(--font-main);
+            background-color: var(--bg);
+            color: #ffffff;
             overflow-x: hidden;
-            height: 100vh;
+            background-image: var(--accent-glow);
+            min-height: 100vh;
         }
 
-        /* --- AMBIENT BACKGROUND --- */
-        #nebula-canvas {
+        @keyframes bg-pan {
+            from { background-position: 0% center; }
+            to { background-position: -200% center; }
+        }
+
+        /* --- BACKGROUND ORBS --- */
+        .orb {
             position: fixed;
-            top: 0;
-            left: 0;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
             z-index: -1;
-            width: 100%;
-            height: 100%;
+            filter: blur(80px);
+            opacity: 0.4;
         }
+        .orb-1 { top: -100px; right: -100px; background: var(--primary); }
+        .orb-2 { bottom: -100px; left: -100px; background: var(--secondary); }
 
-        /* --- HUD & NAVIGATION --- */
-        .hud-top {
+        /* --- NAVBAR --- */
+        nav {
             position: sticky;
-            top: 0;
-            width: 100%;
-            padding: 25px 50px;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(15px);
+            top: 20px;
+            margin: 0 20px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-stroke);
+            border-radius: 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--blaze-orange);
-            box-shadow: 0 5px 30px rgba(255, 77, 0, 0.2);
+            justify-content: space-between;
+            padding: 0 30px;
             z-index: 1000;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
 
-        .brand-logo {
-            font-family: var(--font-header);
-            font-size: 1.8rem;
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            background: linear-gradient(to right, #fff, var(--blaze-orange));
+            font-size: 1.4rem;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, var(--primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .status-panel {
+        .cart-status {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             align-items: center;
         }
 
-        .stat-box {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 5px 15px;
-            border-radius: 5px;
-            border-left: 3px solid var(--cyber-blue);
+        .balance-badge {
+            background: var(--primary);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-weight: 800;
             font-size: 0.9rem;
+            box-shadow: 0 0 20px rgba(255, 94, 0, 0.4);
         }
 
-        /* --- CATEGORY SELECTOR --- */
-        .filter-bar {
+        /* --- HERO SECTION --- */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -2px;
+        }
+
+        .hero p {
+            opacity: 0.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- FILTER SYSTEM --- */
+        .filter-container {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            padding: 20px;
+            gap: 10px;
+            margin: 40px 0;
             flex-wrap: wrap;
         }
 
-        .filter-btn {
-            background: transparent;
-            border: 1px solid var(--border-glow);
-            color: #fff;
+        .filter-tab {
+            background: var(--glass);
+            border: 1px solid var(--glass-stroke);
             padding: 10px 20px;
+            border-radius: 12px;
+            color: white;
             cursor: pointer;
-            font-family: var(--font-header);
-            font-size: 0.7rem;
             transition: 0.3s;
-            border-radius: 2px;
+            font-weight: 600;
         }
 
-        .filter-btn.active, .filter-btn:hover {
-            background: var(--blaze-orange);
-            border-color: var(--blaze-orange);
-            box-shadow: 0 0 15px var(--blaze-orange);
+        .filter-tab:hover, .filter-tab.active {
+            background: white;
+            color: black;
+            transform: translateY(-3px);
         }
 
-        /* --- SHOP GRID --- */
-        .market-grid {
+        /* --- PRODUCT GRID --- */
+        .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 25px;
-            padding: 40px;
+            padding: 0 40px 100px;
             max-width: 1400px;
             margin: 0 auto;
         }
 
-        .item-card {
-            background: var(--card-glass);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 12px;
-            padding: 20px;
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-stroke);
+            border-radius: 24px;
+            padding: 30px;
+            transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             position: relative;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(5px);
-            display: flex;
-            flex-direction: column;
+            overflow: hidden;
         }
 
-        .item-card:hover {
-            transform: scale(1.03);
-            border-color: var(--blaze-orange);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: var(--primary);
+            transform: scale(1.02);
         }
 
-        .badge {
+        .glass-card::after {
+            content: '';
             position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 3px 8px;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            transition: 0.5s;
+        }
+
+        .glass-card:hover::after {
+            left: 100%;
+        }
+
+        .card-category {
             font-size: 0.7rem;
-            border-radius: 3px;
-            background: var(--cyber-blue);
-            color: #000;
-            font-weight: bold;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--secondary);
+            margin-bottom: 8px;
+            display: block;
         }
 
-        .item-icon {
-            font-size: 3rem;
-            margin: 20px 0;
-            text-align: center;
-            filter: drop-shadow(0 0 10px var(--blaze-orange));
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
         }
 
-        .item-title {
-            font-family: var(--font-header);
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-            color: var(--blaze-orange);
-        }
-
-        .features-list {
-            list-style: none;
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-size: 0.85rem;
-            color: #ccc;
-            margin-bottom: 20px;
+            margin-bottom: 8px;
+            opacity: 0.7;
         }
 
-        .features-list li::before {
-            content: "▹ ";
-            color: var(--blaze-orange);
+        .feature-item svg {
+            width: 16px;
+            color: var(--primary);
         }
 
-        .price-row {
-            margin-top: auto;
+        .price-section {
+            margin-top: 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255,255,255,0.1);
         }
 
-        .price {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #fff;
+        .price-val {
+            font-size: 1.8rem;
+            font-weight: 800;
         }
 
-        .buy-now {
-            background: linear-gradient(45deg, var(--blaze-orange), var(--blaze-glow));
+        .buy-btn {
+            background: #ffffff;
+            color: #000;
             border: none;
-            padding: 10px 20px;
-            color: #fff;
-            font-weight: bold;
-            border-radius: 5px;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 800;
             cursor: pointer;
             transition: 0.3s;
         }
 
-        .buy-now:hover {
-            letter-spacing: 1px;
-            filter: brightness(1.2);
+        .buy-btn:hover {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 10px 20px rgba(255, 94, 0, 0.3);
         }
 
-        /* --- CHECKOUT OVERLAY --- */
-        #checkout-modal {
+        /* --- MODAL SYSTEM --- */
+        #payment-modal {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
             z-index: 2000;
             display: none;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
 
-        .terminal {
-            width: 90%;
-            max-width: 600px;
-            background: #000;
-            border: 1px solid var(--blaze-orange);
-            padding: 30px;
-            font-family: 'Courier New', Courier, monospace;
-            box-shadow: 0 0 50px rgba(255, 77, 0, 0.4);
+        .modal-content {
+            background: rgba(20, 20, 25, 0.9);
+            border: 1px solid var(--glass-stroke);
+            padding: 40px;
+            border-radius: 30px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
         }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
-            .hud-top { padding: 15px; }
-            .brand-logo { font-size: 1.2rem; }
-            .market-grid { padding: 15px; gap: 15px; }
+            .grid { padding: 0 20px 100px; }
+            nav { margin: 10px; padding: 0 15px; }
+            .hero { padding: 40px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <canvas id="nebula-canvas"></canvas>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
 
-    <div class="hud-top">
-        <div class="brand-logo">BLAZECLOUD</div>
-        <div class="status-panel">
-            <div class="stat-box">SECURE_NODE: ACTIVE</div>
-            <div class="stat-box">Uptime: 99.9%</div>
+    <nav>
+        <div class="logo">BLAZECLOUD</div>
+        <div class="cart-status">
+            <span class="balance-badge">$1,250.00</span>
         </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Digital Assets.</h1>
+        <p>Premium Minecraft Accounts, Nitro, and Legacy IDs with instant delivery via encrypted glass-nodes.</p>
+    </section>
+
+    <div class="filter-container">
+        <div class="filter-tab active" onclick="updateFilter('all', this)">All Products</div>
+        <div class="filter-tab" onclick="updateFilter('mc-fa', this)">Full Access</div>
+        <div class="filter-tab" onclick="updateFilter('mc-nfa', this)">NFA Alts</div>
+        <div class="filter-tab" onclick="updateFilter('nitro', this)">Discord Nitro</div>
+        <div class="filter-tab" onclick="updateFilter('id', this)">Legacy IDs</div>
     </div>
 
-    <div class="filter-bar">
-        <button class="filter-btn active" onclick="filterItems('all')">ALL ASSETS</button>
-        <button class="filter-btn" onclick="filterItems('mc-fa')">MC FULL ACCESS</button>
-        <button class="filter-btn" onclick="filterItems('mc-nfa')">MC NFA</button>
-        <button class="filter-btn" onclick="filterItems('nitro')">DISCORD NITRO</button>
-        <button class="filter-btn" onclick="filterItems('id')">LEGACY IDs</button>
-    </div>
+    <main class="grid" id="product-grid">
+        </main>
 
-    <div class="market-grid" id="market">
-        </div>
-
-    <div id="checkout-modal">
-        <div class="terminal">
-            <div id="term-content"></div>
-            <div id="term-input" style="margin-top: 20px;">
-                <button class="buy-now" onclick="closeTerminal()">CANCEL_ENCRYPTION</button>
+    <div id="payment-modal">
+        <div class="modal-content">
+            <div id="modal-icon" style="font-size: 4rem; margin-bottom: 20px;">⚡</div>
+            <h2 id="modal-title" style="font-size: 2rem; margin-bottom: 10px;">Confirm Purchase</h2>
+            <p id="modal-desc" style="opacity: 0.6; margin-bottom: 30px;">Transaction will be processed through BlazeCloud secure glass-layer.</p>
+            <div style="display: flex; gap: 10px;">
+                <button class="buy-btn" style="flex: 1;" onclick="processPayment()">AUTHORIZE</button>
+                <button class="buy-btn" style="flex: 1; background: var(--glass); color: white;" onclick="closeModal()">CANCEL</button>
             </div>
         </div>
     </div>
 
     <script>
-        /* BLAZECLOUD DATABASE
-           Contains 800+ line equivalent logic and data structures
-        */
         const PRODUCTS = [
-            { id: 101, category: 'mc-fa', name: "Oasis Full Access", price: "$12.50", icon: "🛡️", badge: "INSTANT", features: ["Change Email", "Change Skin", "Full Security", "Hypixel Unbanned"] },
-            { id: 102, category: 'mc-fa', name: "Mythic SFA", price: "$18.00", icon: "💎", badge: "PREMIUM", features: ["Migrated Microsoft", "Cape Included", "OG Name", "Access to Email"] },
-            { id: 201, category: 'mc-nfa', name: "Bulk NFA Pack (x10)", price: "$2.00", icon: "📦", badge: "CHEAP", features: ["Login Only", "No Security Change", "Great for Alts", "Random Rank"] },
-            { id: 202, category: 'mc-nfa', name: "Ultra NFA (x100)", price: "$15.00", icon: "🔥", badge: "WHALE", features: ["Wholesale Price", "Checkers Included", "90% Active Rate"] },
-            { id: 301, category: 'nitro', name: "Nitro Boost (1 Year)", price: "$25.00", icon: "🚀", badge: "STABLE", features: ["2 Server Boosts", "4000 Character Limit", "Animated Avatar", "Global Emojis"] },
-            { id: 302, category: 'nitro', name: "Nitro Classic (Monthly)", price: "$4.99", icon: "✨", badge: "PROMO", features: ["Classic Features", "No Boosts", "Custom Tag", "Badge Included"] },
-            { id: 401, category: 'id', name: "3-Character OG ID", price: "$150.00", icon: "🆔", badge: "RARE", features: ["Legacy ID", "Verification Ready", "High Resell Value", "One of One"] },
-            { id: 402, category: 'id', name: "Verified Nitro ID", price: "$45.00", icon: "✅", badge: "OG", features: ["Early Supporter", "Verified Developer", "Active Since 2016"] },
-            // ... Scaling logic to simulate massive data ...
+            { id: 1, cat: 'mc-fa', name: "MC Full Access (FA)", price: 14.99, features: ["Change Email", "Unbanned Hypixel", "Full Security", "Instant Mail Access"] },
+            { id: 2, cat: 'mc-fa', name: "SFA High-Tier", price: 24.50, features: ["MVP+ Rank", "Optifine Cape", "Migrated Account", "2014-2016 Age"] },
+            { id: 3, cat: 'mc-nfa', name: "Bulk NFA (x25)", price: 4.99, features: ["Random Skins", "Alt Shop Ready", "Instant Login", "Checkers Support"] },
+            { id: 4, cat: 'mc-nfa', name: "Unchecked NFA (x100)", price: 12.00, features: ["Mixed Quality", "Private List", "Low Ban Rate", "Automatic Delivery"] },
+            { id: 5, cat: 'nitro', name: "Nitro Boost (1y)", price: 34.99, features: ["2 Server Boosts", "Global Emojis", "HD Streaming", "4000 Char Limit"] },
+            { id: 6, cat: 'nitro', name: "Nitro Monthly Gift", price: 9.99, features: ["Instant Link", "Global Activation", "Non-Revocable", "Credit Based"] },
+            { id: 7, cat: 'id', name: "Legacy ID 'Zen'", price: 85.00, features: ["3-Character", "Clean History", "Developer Badge", "Early 2016"] },
+            { id: 8, cat: 'id', name: "OG 'Nova' ID", price: 150.00, features: ["Semi-OG Name", "Verified Status", "Rare Metadata", "Full Ownership"] }
         ];
 
-        // Background Animation Engine
-        const canvas = document.getElementById('nebula-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-
-        function initStars() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            particles = [];
-            for(let i=0; i<150; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    r: Math.random() * 2,
-                    d: Math.random() * 50,
-                    v: Math.random() * 0.5
-                });
-            }
-        }
-
-        function drawStars() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "rgba(255, 77, 0, 0.5)";
-            particles.forEach(p => {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-                ctx.fill();
-                p.y -= p.v;
-                if(p.y < 0) p.y = canvas.height;
-            });
-            requestAnimationFrame(drawStars);
-        }
-
-        // Shop Logic
-        function renderProducts(filter = 'all') {
-            const container = document.getElementById('market');
-            container.innerHTML = '';
-            
-            const filtered = filter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === filter);
-
-            filtered.forEach(p => {
-                const card = document.createElement('div');
-                card.className = 'item-card';
-                card.innerHTML = `
-                    <div class="badge">${p.badge}</div>
-                    <div class="item-icon">${p.icon}</div>
-                    <div class="item-title">${p.name}</div>
-                    <ul class="features-list">
-                        ${p.features.map(f => `<li>${f}</li>`).join('')}
-                    </ul>
-                    <div class="price-row">
-                        <div class="price">${p.price}</div>
-                        <button class="buy-now" onclick="initiateCheckout('${p.name}')">PURCHASE</button>
+        function render(items) {
+            const container = document.getElementById('product-grid');
+            container.innerHTML = items.map(p => `
+                <div class="glass-card">
+                    <span class="card-category">${p.cat.replace('-', ' ')}</span>
+                    <h3 class="card-title">${p.name}</h3>
+                    <div class="features">
+                        ${p.features.map(f => `
+                            <div class="feature-item">
+                                <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                ${f}
+                            </div>
+                        `).join('')}
                     </div>
-                `;
-                container.appendChild(card);
-            });
+                    <div class="price-section">
+                        <div class="price-val">$${p.price}</div>
+                        <button class="buy-btn" onclick="openModal('${p.name}')">Purchase</button>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        function filterItems(cat) {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-            renderProducts(cat);
+        function updateFilter(cat, el) {
+            document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+            const filtered = cat === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.cat === cat);
+            render(filtered);
         }
 
-        // Checkout Animation Sequence
-        function initiateCheckout(name) {
-            const modal = document.getElementById('checkout-modal');
-            const term = document.getElementById('term-content');
-            modal.style.display = 'flex';
-            term.innerHTML = '';
+        function openModal(name) {
+            document.getElementById('modal-title').innerText = name;
+            document.getElementById('payment-modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('payment-modal').style.display = 'none';
+        }
+
+        function processPayment() {
+            const btn = document.querySelector('.modal-content .buy-btn');
+            btn.innerText = "Processing...";
+            btn.disabled = true;
             
-            const lines = [
-                `> INITIALIZING BLAZE_PROTOCOL...`,
-                `> CONNECTING TO SECURE_ENCLAVE...`,
-                `> PRODUCT_ID: ${name.toUpperCase().replace(' ', '_')}`,
-                `> ENCRYPTING TRANSACTION GATEWAY...`,
-                `> WAITING FOR PAYMENT CONFIRMATION...`,
-                `> [####################] 100%`,
-                `> ERROR: PLEASE CONNECT CRYPTO WALLET.`
-            ];
-
-            let i = 0;
-            const interval = setInterval(() => {
-                if(i < lines.length) {
-                    const l = document.createElement('div');
-                    l.style.marginBottom = '10px';
-                    l.style.color = i === lines.length - 1 ? 'var(--blaze-orange)' : '#0f0';
-                    l.innerText = lines[i];
-                    term.appendChild(l);
-                    i++;
-                } else {
-                    clearInterval(interval);
-                }
-            }, 600);
+            setTimeout(() => {
+                alert("Transaction Successful. Check your email for delivery.");
+                closeModal();
+                btn.innerText = "AUTHORIZE";
+                btn.disabled = false;
+            }, 2000);
         }
 
-        function closeTerminal() {
-            document.getElementById('checkout-modal').style.display = 'none';
-        }
-
-        // Initialize
-        window.onload = () => {
-            initStars();
-            drawStars();
-            renderProducts();
-        };
-
-        window.onresize = initStars;
-
+        // Initial Load
+        render(PRODUCTS);
     </script>
 </body>
 </html>
