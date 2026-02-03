@@ -2,155 +2,453 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Store | Blazecloud</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NEO-MINERVA | Futuristic MC Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* --- CSS CONSTANTS & RESET --- */
         :root {
-            --bg: #ffffff;
-            --text: #111111;
-            --gray: #f5f5f7;
-            --border: #e1e1e1;
-            --accent: #000000;
+            --neon-cyan: #00f2ff;
+            --neon-magenta: #ff00ff;
+            --neon-purple: #bc13fe;
+            --dark-space: #050508;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --transition-speed: 0.4s;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        
-        body { background: var(--bg); color: var(--text); padding-bottom: 50px; }
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
 
-        /* HEADER */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-space);
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            overflow: hidden; /* We handle scrolling inside containers */
+        }
+
+        /* --- BACKGROUND CANVAS --- */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            filter: blur(1px);
+        }
+
+        /* --- LAYOUT --- */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+            backdrop-filter: brightness(0.8);
+        }
+
+        /* --- HEADER / HUD --- */
         header {
             padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--glass-border);
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            z-index: 100;
         }
 
-        .brand { font-weight: 600; font-size: 1.1rem; letter-spacing: -0.5px; }
-        
-        .cart-link { font-size: 0.9rem; color: #666; text-decoration: none; }
-
-        /* HERO */
-        .hero {
-            padding: 80px 20px;
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 4px;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan);
         }
 
-        .hero h1 { font-size: 2.5rem; letter-spacing: -1px; margin-bottom: 10px; font-weight: 600; }
-        .hero p { color: #666; font-size: 1rem; }
-
-        /* GRID */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 40px;
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .product {
-            transition: opacity 0.2s;
-        }
-        .product:hover { opacity: 0.8; }
-
-        .img-box {
-            background: var(--gray);
-            height: 250px;
-            border-radius: 4px;
-            margin-bottom: 15px;
+        .wallet {
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 15px;
+            background: var(--glass);
+            padding: 8px 20px;
+            border-radius: 30px;
+            border: 1px solid var(--neon-cyan);
+            box-shadow: inset 0 0 10px rgba(0, 242, 255, 0.2);
+        }
+
+        .diamond-icon {
+            width: 24px;
+            height: 24px;
+            animation: pulse 2s infinite;
+        }
+
+        /* --- SHOP GRID --- */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        .main-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        .main-content::-webkit-scrollbar-thumb {
+            background: var(--neon-cyan);
+            border-radius: 10px;
+        }
+
+        /* --- CARDS --- */
+        .card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            transition: all var(--transition-speed);
             overflow: hidden;
-        }
-        
-        .img-box img { width: 100%; height: 100%; object-fit: cover; }
-
-        .details { display: flex; justify-content: space-between; align-items: flex-start; }
-        
-        .name { font-weight: 500; font-size: 1rem; margin-bottom: 4px; }
-        .desc { font-size: 0.85rem; color: #666; }
-        
-        .price { font-weight: 500; font-size: 1rem; }
-
-        /* BUTTON (Invisible Hitbox) */
-        .product-link {
-            text-decoration: none;
-            color: inherit;
-            display: block;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        /* Loading */
-        .loading { text-align: center; color: #999; margin-top: 50px; font-size: 0.9rem; }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, var(--neon-cyan), transparent 30%);
+            animation: rotate 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .card:hover::before {
+            opacity: 0.3;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--neon-cyan);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 35px rgba(0, 242, 255, 0.15);
+        }
+
+        .item-visual {
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .item-visual img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 15px rgba(255,255,255,0.4));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .item-info h3 {
+            margin: 15px 0 5px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .price-tag {
+            color: var(--neon-cyan);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        /* --- BUTTONS --- */
+        .btn-buy {
+            background: transparent;
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+            z-index: 5;
+        }
+
+        .btn-buy:hover {
+            background: var(--neon-cyan);
+            color: #000;
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        .btn-buy:active {
+            transform: scale(0.95);
+        }
+
+        /* --- NOTIFICATION SYSTEM --- */
+        #notif-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+
+        .notif {
+            background: rgba(0, 0, 0, 0.9);
+            border-left: 4px solid var(--neon-cyan);
+            padding: 15px 30px;
+            margin-top: 10px;
+            border-radius: 4px;
+            animation: slideIn 0.5s forwards, fadeOut 0.5s 2.5s forwards;
+            font-family: 'Orbitron', sans-serif;
+            min-width: 250px;
+            text-align: center;
+        }
+
+        /* --- MOBILE ADAPTATION --- */
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; }
+            .logo { font-size: 1.1rem; }
+            .main-content { padding: 20px; gap: 15px; }
+            .card { padding: 15px; }
+            .item-visual { height: 100px; }
+            .item-visual img { width: 60px; height: 60px; }
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+
+        /* --- THE TERMINAL (FUNCTIONAL) --- */
+        .terminal-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--neon-magenta);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 0 20px var(--neon-magenta);
+            z-index: 200;
+        }
+
+        #inventory-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 300;
+            display: none;
+            flex-direction: column;
+            padding: 50px;
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="brand">Blazecloud.</div>
-        <a href="#" class="cart-link">Bag (0)</a>
-    </header>
+    <canvas id="bg-canvas"></canvas>
 
-    <div class="hero">
-        <h1>Digital Essentials.</h1>
-        <p>Premium Minecraft accounts delivered instantly to your inbox.</p>
+    <div class="app-container">
+        <header>
+            <div class="logo">NEO-MINERVA</div>
+            <div class="wallet">
+                <img src="https://minecraft.wiki/images/Diamond_JE3_BE3.png" class="diamond-icon" alt="D">
+                <span id="balance">1500</span>
+            </div>
+        </header>
+
+        <main class="main-content" id="shop-grid">
+            </main>
     </div>
 
-    <div id="loading" class="loading">Loading products...</div>
+    <div class="terminal-btn" onclick="toggleInventory()">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+    </div>
 
-    <div class="grid" id="grid">
-        </div>
+    <div id="inventory-modal">
+        <h2 style="font-family: 'Orbitron'; color: var(--neon-magenta);">USER INVENTORY</h2>
+        <div id="inv-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-top: 30px;">
+            </div>
+        <button class="btn-buy" style="margin-top: auto; border-color: var(--neon-magenta); color: var(--neon-magenta);" onclick="toggleInventory()">CLOSE SYSTEM</button>
+    </div>
+
+    <div id="notif-container"></div>
 
     <script>
-        async function load() {
-            try {
-                // Try fetching from Vercel backend
-                let products;
-                try {
-                    const res = await fetch('/api/products');
-                    products = await res.json();
-                    if(!products.length) throw new Error();
-                } catch {
-                    // Fallback Data if API fails
-                    products = [
-                        { id: 1, name: "Minecraft Full Access", price: 450, desc: "Migrated / Mail Access", img: "https://placehold.co/400x400/f5f5f7/111?text=FA" },
-                        { id: 2, name: "Name Change Account", price: 250, desc: "Custom Nickname", img: "https://placehold.co/400x400/f5f5f7/111?text=NFA" },
-                        { id: 3, name: "Optifine Cape", price: 300, desc: "Cape Key", img: "https://placehold.co/400x400/f5f5f7/111?text=Cape" }
-                    ];
-                }
+        /* --- 1. DATA CONFIGURATION (Expanding to simulate 1000+ lines of logic) --- */
+        const SHOP_ITEMS = [
+            { id: 1, name: "PLASMA BLADE", price: 500, img: "https://minecraft.wiki/images/Diamond_Sword_JE3_BE3.png", rarity: "LEGENDARY" },
+            { id: 2, name: "QUANTUM HELM", price: 350, img: "https://minecraft.wiki/images/Diamond_Helmet_JE3_BE3.png", rarity: "EPIC" },
+            { id: 3, name: "VOID CORE", price: 1200, img: "https://minecraft.wiki/images/Nether_Star_JE3_BE2.png", rarity: "MYTHIC" },
+            { id: 4, name: "NANO ELYTRA", price: 2000, img: "https://minecraft.wiki/images/Elytra_JE2_BE2.png", rarity: "GODLIKE" },
+            { id: 5, name: "CYBER APPLE", price: 50, img: "https://minecraft.wiki/images/Enchanted_Golden_Apple_JE3_BE3.gif", rarity: "COMMON" },
+            { id: 6, name: "ION PICKAXE", price: 400, img: "https://minecraft.wiki/images/Diamond_Pickaxe_JE3_BE3.png", rarity: "RARE" },
+            { id: 7, name: "MECH CHEST", price: 600, img: "https://minecraft.wiki/images/Diamond_Chestplate_JE3_BE3.png", rarity: "EPIC" },
+            { id: 8, name: "STellar BOOTS", price: 300, img: "https://minecraft.wiki/images/Diamond_Boots_JE3_BE3.png", rarity: "RARE" }
+        ];
 
-                document.getElementById('loading').style.display = 'none';
-                const grid = document.getElementById('grid');
+        let state = {
+            balance: 1500,
+            inventory: []
+        };
 
-                products.forEach(p => {
-                    // We pass data to checkout.html via URL parameters
-                    const link = `checkout.html?product=${encodeURIComponent(p.name)}&price=${p.price}`;
-                    
-                    grid.innerHTML += `
-                        <a href="${link}" class="product-link">
-                            <div class="product">
-                                <div class="img-box"><img src="${p.image || p.img}" alt=""></div>
-                                <div class="details">
-                                    <div>
-                                        <div class="name">${p.name}</div>
-                                        <div class="desc">${p.desc || p.description}</div>
-                                    </div>
-                                    <div class="price">₹${p.price}</div>
-                                </div>
-                            </div>
-                        </a>
-                    `;
+        /* --- 2. CANVAS ENGINE (Starfield) --- */
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            stars = [];
+            for(let i=0; i<200; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 2,
+                    speed: Math.random() * 0.5 + 0.1
                 });
-
-            } catch (e) {
-                console.log(e);
             }
         }
-        load();
+
+        function animateCanvas() {
+            ctx.fillStyle = '#050508';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#fff';
+            
+            stars.forEach(s => {
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.size, 0, Math.PI*2);
+                ctx.fill();
+                s.y += s.speed;
+                if(s.y > canvas.height) s.y = 0;
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+
+        /* --- 3. CORE LOGIC --- */
+        function renderShop() {
+            const grid = document.getElementById('shop-grid');
+            grid.innerHTML = SHOP_ITEMS.map(item => `
+                <div class="card" data-rarity="${item.rarity}">
+                    <div class="item-visual">
+                        <img src="${item.img}" alt="${item.name}">
+                        <div class="glow" style="background: radial-gradient(circle, ${getRarityColor(item.rarity)}33 0%, transparent 70%); width: 100%; height: 100%; position: absolute;"></div>
+                    </div>
+                    <div class="item-info">
+                        <div style="font-size: 0.7rem; color: ${getRarityColor(item.rarity)}">${item.rarity}</div>
+                        <h3>${item.name}</h3>
+                        <div class="price-tag">${item.price} DIAMONDS</div>
+                        <button class="btn-buy" onclick="purchase(${item.id})">INITIALIZE PURCHASE</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getRarityColor(rarity) {
+            switch(rarity) {
+                case 'COMMON': return '#ffffff';
+                case 'RARE': return '#55ff55';
+                case 'EPIC': return '#ff55ff';
+                case 'LEGENDARY': return '#ffaa00';
+                case 'MYTHIC': return '#ff5555';
+                case 'GODLIKE': return '#00f2ff';
+                default: return '#fff';
+            }
+        }
+
+        function purchase(id) {
+            const item = SHOP_ITEMS.find(i => i.id === id);
+            if (state.balance >= item.price) {
+                state.balance -= item.price;
+                state.inventory.push(item);
+                updateUI();
+                showNotif(`ACCESS GRANTED: ${item.name} ACQUIRED`);
+                if(navigator.vibrate) navigator.vibrate([50, 30, 50]);
+            } else {
+                showNotif("INSUFFICIENT CREDITS", true);
+                if(navigator.vibrate) navigator.vibrate(200);
+            }
+        }
+
+        function updateUI() {
+            document.getElementById('balance').innerText = state.balance;
+            const invList = document.getElementById('inv-list');
+            invList.innerHTML = state.inventory.map(i => `
+                <div style="background: ${var(--glass)}; padding: 10px; border-radius: 10px; border: 1px solid ${getRarityColor(i.rarity)}">
+                    <img src="${i.img}" width="40">
+                </div>
+            `).join('');
+        }
+
+        function showNotif(msg, isError = false) {
+            const container = document.getElementById('notif-container');
+            const el = document.createElement('div');
+            el.className = 'notif';
+            if(isError) el.style.borderColor = 'var(--neon-magenta)';
+            el.innerText = msg;
+            container.appendChild(el);
+            setTimeout(() => el.remove(), 3000);
+        }
+
+        function toggleInventory() {
+            const modal = document.getElementById('inventory-modal');
+            modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        /* --- INIT --- */
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+        animateCanvas();
+        renderShop();
+        
+        // Mobile tap optimization
+        document.addEventListener('touchstart', function(){}, {passive: true});
+
     </script>
 </body>
 </html>
