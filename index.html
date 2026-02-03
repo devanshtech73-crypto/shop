@@ -148,18 +148,37 @@
         const stockToggle = document.getElementById('stockToggle');
         const emptyState = document.getElementById('emptyState');
 
-        async function init() {
-            renderSkeletons();
-            try {
-                const res = await fetch(`${API_BASE}/api/products`);
-                if (!res.ok) throw new Error("Failed to fetch");
-                products = await res.json();
-                populateCategories();
-                applyFilters();
-            } catch (err) {
-                grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; color:#f87171;">Error: ${err.message}. Ensure backend is running and CORS is enabled.</div>`;
+async function init() {
+    renderSkeletons();
+
+    try {
+        const res = await fetch(`${API_BASE}/api/products`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
             }
+        });
+
+        if (!res.ok) {
+            const text = await res.text();
+            throw new Error(`Backend error ${res.status}: ${text}`);
         }
+
+        products = await res.json();
+        populateCategories();
+        applyFilters();
+
+    } catch (err) {
+        console.error("FETCH ERROR:", err);
+
+        grid.innerHTML = `
+          <div style="grid-column:1/-1; text-align:center; color:#f87171;">
+            ❌ Cannot connect to backend.<br>
+            <small>${err.message}</small>
+          </div>
+        `;
+    }
+}
 
         function renderSkeletons() {
             grid.innerHTML = Array(8).fill(0).map(() => `
