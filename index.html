@@ -1,10 +1,64 @@
 <!DOCTYPE html>
+<html lang="en" data-theme="dark">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlazeCloud | Premium Glass Store</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <title>BlazeCloud | Premium Digital Store</title>
     <style>
+        body {
+            background: radial-gradient(circle at top right, #1e293b, #0f172a, #020617);
+            background-attachment: fixed;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-dark {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .text-gradient {
+            background: linear-gradient(to right, #60a5fa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         :root {
             --primary: #3b82f6;
             --accent: #8b5cf6;
@@ -17,19 +71,7 @@
 
         /* Base Reset */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
-        body { 
-  background: var(--bg); 
-  color: var(--text-main); 
-  line-height: 1.6; 
-  overflow-x: hidden;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-main {
-  flex: 1;
-}
-
+        body { background: var(--bg); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
 
         /* Background Glows */
         .glow { position: fixed; width: 40vw; height: 40vw; border-radius: 50%; filter: blur(100px); z-index: -1; opacity: 0.15; }
@@ -88,8 +130,14 @@ main {
         }
     </style>
 </head>
+<body class="min-h-screen text-slate-100 font-sans">
+
+    <nav class="navbar glass-dark sticky top-0 z-[100] px-6 py-4 mb-8">
+        <div class="flex-1">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/50">
+                    <i class="fa-solid fa-fire-glow text-white"></i>
 <body>
-    <h1 style="color:red;">FOOTER TEST AT TOP</h1>
     <div class="glow glow-1"></div>
     <div class="glow glow-2"></div>
 
@@ -101,16 +149,40 @@ main {
                     <input type="text" id="searchInput" class="search-input" placeholder="Search products...">
                     <a href="#" style="color:white; text-decoration:none; font-size: 0.9rem;">Support</a>
                 </div>
+                <span class="text-2xl font-display font-black tracking-tight uppercase">Blaze<span class="text-blue-400">Cloud</span></span>
             </div>
         </div>
+        <div class="flex-none gap-4">
+            <button onclick="showSection('shop')" class="btn btn-ghost font-semibold">Store</button>
+            <button onclick="authAdmin()" class="btn btn-glass px-6 rounded-full text-blue-300">
+                <i class="fa-solid fa-lock-open mr-2 opacity-50"></i> Admin
+            </button>
+        </div>
+    </nav>
     </header>
 
+    <div id="hero" class="container mx-auto px-6 mb-12 animate__animated animate__fadeIn">
+        <div class="max-w-3xl">
+            <h1 class="text-5xl md:text-7xl font-display font-extrabold mb-4 leading-none">THE DIGITAL <br><span class="text-gradient">MARKETPLACE.</span></h1>
+            <p class="text-lg text-slate-400 font-light max-w-md border-l-2 border-blue-500 pl-4">Premium licenses and game accounts delivered with cloud speed.</p>
+        </div>
     <div class="hero container animate__animated animate__fadeIn">
         <h1>BlazeCloud <span class="gradient-text">Digital Store</span></h1>
         <p>Instant delivery. Premium support. Elite gaming assets.</p>
         <button class="btn btn-primary" onclick="document.getElementById('grid').scrollIntoView({behavior:'smooth'})">Browse Products</button>
     </div>
 
+    <main id="shop-section" class="container mx-auto px-6 pb-20">
+        <div class="flex flex-col md:flex-row gap-6 mb-12 items-center">
+            <div class="tabs tabs-boxed bg-transparent border border-white/10 p-1 flex-1">
+                <button onclick="filterItems('All')" class="tab tab-active text-white">All Deals</button>
+                <button onclick="filterItems('Minecraft')" class="tab">Minecraft</button>
+                <button onclick="filterItems('Nitro')" class="tab">Nitro</button>
+                <button onclick="filterItems('Gaming')" class="tab">Gaming</button>
+            </div>
+            <div class="w-full md:w-80">
+                <input id="searchBox" onkeyup="search()" type="text" placeholder="Search premium items..." class="input bg-white/5 border-white/10 w-full rounded-full focus:outline-none focus:border-blue-500" />
+            </div>
     <main class="container">
         <div class="controls glass">
             <select id="catFilter"><option value="all">All Categories</option></select>
@@ -124,16 +196,46 @@ main {
             </label>
         </div>
 
+        <div id="grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 animate__animated animate__zoomIn">
         <div id="grid" class="grid">
             </div>
+    </main>
 
+    <section id="admin-section" class="container mx-auto px-6 hidden py-10">
+        <div class="flex justify-between items-center mb-10">
+            <h2 class="text-4xl font-display font-bold">Admin Console</h2>
+            <button class="btn btn-primary rounded-full shadow-lg" onclick="openModal()">+ Add Product</button>
         <div id="emptyState" style="display:none; text-align:center; padding: 50px; color: var(--text-dim);">
             <h2>No products found</h2>
             <p>Try adjusting your filters or search terms.</p>
         </div>
-</main>
+        <div class="glass rounded-3xl overflow-hidden shadow-2xl">
+            <table class="table w-full">
+                <thead class="bg-white/5">
+                    <tr class="text-blue-400 uppercase text-xs tracking-widest">
+                        <th>Product</th><th>Price</th><th>Category</th><th class="text-right">Manage</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-list" class="text-sm"></tbody>
+            </table>
+        </div>
+    </section>
+    </main>
 
-
+    <dialog id="item_modal" class="modal">
+        <div class="modal-box glass-dark border-blue-500/30">
+            <h3 class="font-display font-bold text-xl mb-6">Manage Listing</h3>
+            <div class="space-y-4">
+                <input type="hidden" id="e-id">
+                <input type="text" id="e-name" placeholder="Product Name" class="input input-bordered w-full bg-black/20" />
+                <input type="text" id="e-price" placeholder="Price (e.g. 250rs)" class="input input-bordered w-full bg-black/20" />
+                <select id="e-cat" class="select select-bordered w-full bg-black/20">
+                    <option>Minecraft</option><option>Nitro</option><option>Gaming</option><option>Streaming</option>
+                </select>
+            </div>
+            <div class="modal-action">
+                <button class="btn btn-ghost" onclick="item_modal.close()">Cancel</button>
+                <button class="btn btn-primary px-10" onclick="save()">Save Live</button>
     <div id="modal" class="modal" onclick="closeModal(event)">
         <div class="modal-content glass animate__animated animate__zoomIn">
             <h2 id="modalTitle" class="gradient-text" style="font-size:2rem; margin-bottom:15px;"></h2>
@@ -148,10 +250,37 @@ main {
             </div>
             <button class="btn btn-primary" style="width:100%" onclick="document.getElementById('modal').style.display='none'">Got it!</button>
         </div>
+    </dialog>
     </div>
 
-<script>
+    <script>
+        const ADMIN_PASS = "admin123"; // Change your password here
+        let isAdmin = false;
 
+        let db = JSON.parse(localStorage.getItem('blaze_db')) || [
+            { id: 1, name: "Minecraft Premium Temp", price: "30rs", cat: "Minecraft" },
+            { id: 2, name: "Minecraft Premium Perm", price: "80rs", cat: "Minecraft" },
+            { id: 3, name: "Nitro Promo (1 Month)", price: "50rs", cat: "Nitro" },
+            { id: 4, name: "Xbox Game Pass", price: "30rs", cat: "Gaming" }
+        ];
+
+        function authAdmin() {
+            Swal.fire({
+                title: 'Restricted Area',
+                input: 'password',
+                inputPlaceholder: 'Enter Admin Password',
+                background: '#0f172a',
+                color: '#fff',
+                confirmButtonColor: '#2563eb',
+                showCancelButton: true
+            }).then((res) => {
+                if(res.value === ADMIN_PASS) {
+                    isAdmin = true;
+                    showSection('admin');
+                } else if(res.value) {
+                    Swal.fire({ icon: 'error', title: 'Wrong Password', background: '#0f172a', color: '#fff' });
+                }
+            });
         const API_BASE = "https://YOUR-RAILWAY-URL"; // REPLACE THIS
         let products = [];
 
@@ -176,6 +305,18 @@ main {
             }
         }
 
+        function renderShop(list = db) {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = list.map(p => `
+                <div class="glass p-6 rounded-[2rem] hover:border-blue-500/50 transition-all group flex flex-col justify-between h-full">
+                    <div>
+                        <span class="text-[10px] font-bold text-blue-400 tracking-widest uppercase">${p.cat}</span>
+                        <h3 class="text-xl font-display font-bold mt-2 leading-tight">${p.name}</h3>
+                    </div>
+                    <div class="mt-8 flex items-center justify-between">
+                        <span class="text-2xl font-black italic">₹${p.price.replace('rs','')}</span>
+                        <button onclick="buy('${p.name}')" class="btn btn-sm btn-primary rounded-full px-5 shadow-lg shadow-blue-500/20">Buy</button>
+                    </div>
         function renderSkeletons() {
             grid.innerHTML = Array(8).fill(0).map(() => `
                 <div class="glass card">
@@ -186,6 +327,26 @@ main {
             `).join('');
         }
 
+        function renderAdmin() {
+            const list = document.getElementById('admin-list');
+            list.innerHTML = db.map(p => `
+                <tr class="hover:bg-white/5 border-b border-white/5">
+                    <td class="font-bold">${p.name}</td>
+                    <td class="text-green-400 font-mono">${p.price}</td>
+                    <td><span class="badge badge-ghost text-xs">${p.cat}</span></td>
+                    <td class="text-right">
+                        <button class="btn btn-xs btn-ghost" onclick="editItem(${p.id})"><i class="fa-solid fa-edit"></i></button>
+                        <button class="btn btn-xs btn-ghost text-red-400" onclick="delItem(${p.id})"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function showSection(type) {
+            document.getElementById('shop-section').style.display = type === 'shop' ? 'block' : 'none';
+            document.getElementById('hero').style.display = type === 'shop' ? 'block' : 'none';
+            document.getElementById('admin-section').style.display = type === 'admin' ? 'block' : 'none';
+            if(type === 'admin') renderAdmin();
         function populateCategories() {
             const categories = [...new Set(products.map(p => p.category))];
             categories.forEach(cat => {
@@ -196,6 +357,14 @@ main {
             });
         }
 
+        function buy(name) {
+            Swal.fire({
+                title: 'Order Summary',
+                text: `Ready to purchase ${name}?`,
+                icon: 'question',
+                background: '#0f172a',
+                color: '#fff',
+                confirmButtonText: 'Proceed to WhatsApp'
         function applyFilters() {
             let filtered = products.filter(p => {
                 const matchesSearch = p.name.toLowerCase().includes(searchInput.value.toLowerCase()) || 
@@ -204,15 +373,43 @@ main {
                 const matchesStock = !stockToggle.checked || p.stockStatus === true;
                 return matchesSearch && matchesCat && matchesStock;
             });
+        }
 
+        function openModal(id = null) {
+            const m = document.getElementById('item_modal');
+            if(id) {
+                const p = db.find(x => x.id === id);
+                document.getElementById('e-id').value = p.id;
+                document.getElementById('e-name').value = p.name;
+                document.getElementById('e-price').value = p.price;
+                document.getElementById('e-cat').value = p.cat;
+            } else {
+                document.getElementById('e-id').value = "";
+                document.getElementById('e-name').value = "";
+                document.getElementById('e-price').value = "";
+            }
+            m.showModal();
+        }
             // Sorting
             if (sortOrder.value === 'priceLow') filtered.sort((a,b) => parseFloat(a.price) - parseFloat(b.price));
             if (sortOrder.value === 'priceHigh') filtered.sort((a,b) => parseFloat(b.price) - parseFloat(a.price));
             if (sortOrder.value === 'newest') filtered.reverse();
 
+        function save() {
+            const id = document.getElementById('e-id').value;
+            const n = { id: id ? parseInt(id) : Date.now(), name: document.getElementById('e-name').value, price: document.getElementById('e-price').value, cat: document.getElementById('e-cat').value };
+            if(id) db = db.map(p => p.id == id ? n : p);
+            else db.push(n);
+            localStorage.setItem('blaze_db', JSON.stringify(db));
+            renderShop(); renderAdmin();
+            item_modal.close();
             renderProducts(filtered);
         }
 
+        function delItem(id) {
+            db = db.filter(p => p.id !== id);
+            localStorage.setItem('blaze_db', JSON.stringify(db));
+            renderAdmin(); renderShop();
         function renderProducts(list) {
             emptyState.style.display = list.length === 0 ? 'block' : 'none';
             grid.innerHTML = list.map(p => `
@@ -232,16 +429,26 @@ main {
             `).join('');
         }
 
+        function editItem(id) { openModal(id); }
+
+        function filterItems(c) {
+            const list = c === 'All' ? db : db.filter(p => p.cat === c);
+            renderShop(list);
         function openBuyModal(name, cat) {
             document.getElementById('modalTitle').innerText = name;
             document.getElementById('modalDesc').innerText = `Category: ${cat} | Digital Delivery`;
             document.getElementById('modal').style.display = 'flex';
         }
 
+        function search() {
+            const q = document.getElementById('searchBox').value.toLowerCase();
+            renderShop(db.filter(p => p.name.toLowerCase().includes(q)));
         function closeModal(e) {
             if(e.target.id === 'modal') e.target.style.display = 'none';
         }
 
+        // Init
+        renderShop();
         // Listeners
         searchInput.addEventListener('input', applyFilters);
         catFilter.addEventListener('change', applyFilters);
@@ -249,6 +456,6 @@ main {
         stockToggle.addEventListener('change', applyFilters);
 
         init();
-
+    </script>
 </body>
 </html>
