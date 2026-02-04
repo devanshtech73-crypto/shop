@@ -5,6 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BlazeCloud | Premium Digital Store</title>
     <style>
+        #menuBtn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-size: 26px;
+  cursor: pointer;
+  z-index: 1001;
+  color: white;
+}
+
+#sideMenu {
+  position: fixed;
+  top: 0;
+  left: -260px;
+  width: 260px;
+  height: 100%;
+  background: rgba(10,10,20,0.95);
+  padding: 20px;
+  transition: 0.3s ease;
+  z-index: 1002;
+}
+
+#sideMenu h3 {
+  margin-bottom: 20px;
+}
+
+#sideMenu a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  margin: 12px 0;
+  font-size: 1rem;
+}
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  z-index: 1000;
+}
+
         :root {
             --primary: #3b82f6;
             --accent: #8b5cf6;
@@ -91,6 +136,20 @@
             </div>
         </div>
     </header>
+    <!-- Hamburger Button -->
+<div id="menuBtn" onclick="toggleMenu()">☰</div>
+
+<!-- Side Menu -->
+<div id="sideMenu">
+  <h3>Categories</h3>
+  <a href="#">Accounts</a>
+  <a href="#">Game Keys</a>
+  <a href="#">Boosting</a>
+  <a href="#">Gift Cards</a>
+</div>
+
+<!-- Overlay -->
+<div id="overlay" onclick="toggleMenu()"></div>
 
     <div class="hero container animate__animated animate__fadeIn">
         <h1>BlazeCloud <span class="gradient-text">Digital Store</span></h1>
@@ -137,6 +196,18 @@
     </div>
 
     <script>
+        function toggleMenu() {
+  const menu = document.getElementById("sideMenu");
+  const overlay = document.getElementById("overlay");
+
+  if (menu.style.left === "0px") {
+    menu.style.left = "-260px";
+    overlay.style.display = "none";
+  } else {
+    menu.style.left = "0px";
+    overlay.style.display = "block";
+  }
+}
         const API_BASE = "https://YOUR-RAILWAY-URL"; // REPLACE THIS
         let products = [];
 
