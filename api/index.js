@@ -11,7 +11,12 @@ const Order = require('./models/Order');
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: "https://www.blazecloud.in",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
 
 // Database Connection
 let isConnected = false;
