@@ -152,7 +152,7 @@ async function init() {
     renderSkeletons();
 
     try {
-        const res = await fetch(`${API_BASE}/api/products`, {
+        const API_BASE = "https://bcknd-production-a4d7.up.railway.app";
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
