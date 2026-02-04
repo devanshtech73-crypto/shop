@@ -208,47 +208,36 @@
     overlay.style.display = "block";
   }
 }
-        const API_BASE = "https://YOUR-RAILWAY-URL"; // REPLACE THIS
-        let products = [];
-
-        // UI Selectors
-        const grid = document.getElementById('grid');
-        const catFilter = document.getElementById('catFilter');
-        const sortOrder = document.getElementById('sortOrder');
-        const searchInput = document.getElementById('searchInput');
-        const stockToggle = document.getElementById('stockToggle');
-        const emptyState = document.getElementById('emptyState');
+       const API_BASE = "https://bcknd-production-a4d7.up.railway.app";
+let products = [];
 
 async function init() {
-    renderSkeletons();
+  renderSkeletons();
 
-    try {
-        const API_BASE = "https://bcknd-production-a4d7.up.railway.app";
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
+  try {
+    const res = await fetch(`${API_BASE}/api/products`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
 
-        if (!res.ok) {
-            const text = await res.text();
-            throw new Error(`Backend error ${res.status}: ${text}`);
-        }
-
-        products = await res.json();
-        populateCategories();
-        applyFilters();
-
-    } catch (err) {
-        console.error("FETCH ERROR:", err);
-
-        grid.innerHTML = `
-          <div style="grid-column:1/-1; text-align:center; color:#f87171;">
-            ❌ Cannot connect to backend.<br>
-            <small>${err.message}</small>
-          </div>
-        `;
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`Backend error ${res.status}: ${text}`);
     }
+
+    products = await res.json();
+    populateCategories();
+    applyFilters();
+
+  } catch (err) {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1; text-align:center; color:#f87171;">
+        Error: ${err.message}
+      </div>
+    `;
+  }
 }
 
         function renderSkeletons() {
