@@ -5,6 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BlazeCloud | Premium Digital Store</title>
     <style>
+        #overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  z-index: 998;
+}
+
+#sideMenu {
+  position: fixed;
+  top: 0;
+  left: -280px;
+  width: 280px;
+  height: 100%;
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(12px);
+  transition: 0.3s ease;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+.user-box {
+  display: flex;
+  gap: 12px;
+  padding: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  align-items: center;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.username {
+  font-weight: 600;
+}
+
+.userid {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.menu-links a,
+.menu-bottom a {
+  display: block;
+  padding: 14px 20px;
+  color: white;
+  text-decoration: none;
+}
+
+.menu-links a:hover,
+.menu-bottom a:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.menu-bottom {
+  margin-top: auto;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
         #menuBtn {
   position: fixed;
   top: 20px;
@@ -122,6 +186,29 @@
     </style>
 </head>
 <body>
+    <div id="overlay" onclick="toggleMenu()"></div>
+
+<div id="sideMenu">
+  <div class="user-box">
+    <img src="https://i.imgur.com/6VBx3io.png" class="avatar">
+    <div>
+      <div class="username">Guest User</div>
+      <div class="userid">ID: 000001</div>
+    </div>
+  </div>
+
+  <div class="menu-links">
+    <a href="#">📊 Dashboard</a>
+    <a href="#">💰 Balance</a>
+    <a href="#">📜 History</a>
+    <a href="#">👤 Account</a>
+  </div>
+
+  <div class="menu-bottom">
+    <a href="#">⚙️ Settings</a>
+  </div>
+</div>
+
     <div class="glow glow-1"></div>
     <div class="glow glow-2"></div>
 
@@ -201,7 +288,7 @@
   const overlay = document.getElementById("overlay");
 
   if (menu.style.left === "0px") {
-    menu.style.left = "-260px";
+    menu.style.left = "-280px";
     overlay.style.display = "none";
   } else {
     menu.style.left = "0px";
