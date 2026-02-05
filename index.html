@@ -6,139 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BlazeCloud | Premium Digital Store</title>
     <style>
-:root {
-  --primary: #3b82f6;
-  --accent: #8b5cf6;
-  --bg: #0f172a;
-  --glass: rgba(255,255,255,0.03);
-  --glass-border: rgba(255,255,255,0.1);
-  --text-main: #f8fafc;
-  --text-dim: #94a3b8;
-}
-
-/* Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Inter, system-ui, sans-serif;
-}
-
-body {
-  background: var(--bg);
-  color: var(--text-main);
-  line-height: 1.6;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  overflow-x: hidden;
-}
-
-/* Background glows */
-.glow {
-  position: fixed;
-  width: 40vw;
-  height: 40vw;
-  border-radius: 50%;
-  filter: blur(100px);
-  z-index: -1;
-  opacity: 0.15;
-}
-.glow-1 { top: -10%; left: -10%; background: var(--primary); }
-.glow-2 { bottom: -10%; right: -10%; background: var(--accent); }
-
-/* Glass */
-.glass {
-  background: var(--glass);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
-}
-
-/* Layout */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-/* Header */
-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  padding: 15px 0;
-}
-.nav-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-}
-.logo {
-  font-size: 1.5rem;
-  font-weight: 800;
-  background: linear-gradient(to right,#60a5fa,#a855f7);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.nav-links {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-}
-.search-input {
-  background: rgba(0,0,0,0.2);
-  border: 1px solid var(--glass-border);
-  color: white;
-  padding: 8px 15px;
-  border-radius: 20px;
-  outline: none;
-  width: 180px;
-}
-
-/* Hero */
-.hero {
-  padding: 100px 0 60px;
-  text-align: center;
-}
-.hero h1 {
-  font-size: 3.5rem;
-  font-weight: 900;
-  margin-bottom: 15px;
-}
-.hero p {
-  color: var(--text-dim);
-  margin-bottom: 30px;
-}
-
-/* Button */
-.btn {
-  padding: 12px 30px;
-  border-radius: 30px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-}
-.btn-primary {
-  background: var(--primary);
-  color: white;
-}
-
-/* OPTION BOX AREA (FIXED) */
 .big-option-box {
   margin-top: 30px;
   padding: 20px;
   border-radius: 16px;
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.1);
+
   display: inline-block;
+  margin-left: auto;
+  margin-right: 4000px;
 }
+
 
 .option-wrapper {
   display: flex;
   gap: 20px;
-  justify-content: flex-start;
 }
 
 .option-box {
@@ -148,46 +31,219 @@ header {
   border: 1px solid rgba(255,255,255,0.1);
   color: white;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+
+  transition: 
+    background 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.3s ease;
 }
 
+/* hover effect */
 .option-box:hover {
-  background: #38bdf8;
-  color: #0f172a;
+  background: #38bdf8; /* sky blue */
+  color: #0f172a; /* dark text so it’s readable */
   transform: translateY(-3px);
   box-shadow: 0 0 15px rgba(56,189,248,0.6);
 }
-
-/* Grid */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
-  gap: 25px;
+        .option-wrapper {
+  margin-top: 30px;
+  display: flex;
+  gap: 20px;
+  justify-content: flex-start;
+  margin-right: 9px;
 }
 
-.card {
-  padding: 25px;
-  transition: 0.3s;
+.option-box {
+  padding: 20px 30px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  cursor: pointer;
 }
-.card:hover {
-  transform: translateY(-6px);
+        body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Footer */
-footer {
-  margin-top: 60px;
-  padding: 30px 0;
-  text-align: center;
-  color: var(--text-dim);
+        #overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  z-index: 998;
+}
+
+#sideMenu {
+  position: fixed;
+  top: 0;
+  left: -280px;
+  width: 280px;
+  height: 100%;
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(12px);
+  transition: 0.3s ease;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+.user-box {
+  display: flex;
+  gap: 12px;
+  padding: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  align-items: center;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.username {
+  font-weight: 600;
+}
+
+.userid {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.menu-links a,
+.menu-bottom a {
+  display: block;
+  padding: 14px 20px;
+  color: white;
+  text-decoration: none;
+}
+
+.menu-links a:hover,
+.menu-bottom a:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.menu-bottom {
+  margin-top: auto;
   border-top: 1px solid rgba(255,255,255,0.1);
-  background: rgba(0,0,0,0.2);
 }
 
-/* Mobile */
-@media (max-width:768px) {
-  .hero h1 { font-size: 2.3rem; }
-  .nav-links { display: none; }
+        #menuBtn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-size: 26px;
+  cursor: pointer;
+  z-index: 1001;
+  color: white;
 }
+
+#sideMenu {
+  position: fixed;
+  top: 0;
+  left: -260px;
+  width: 260px;
+  height: 100%;
+  background: rgba(10,10,20,0.95);
+  padding: 20px;
+  transition: 0.3s ease;
+  z-index: 1002;
+}
+
+#sideMenu h3 {
+  margin-bottom: 20px;
+}
+
+#sideMenu a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  margin: 12px 0;
+  font-size: 1rem;
+}
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  z-index: 1000;
+}
+
+        :root {
+            --primary: #3b82f6;
+            --accent: #8b5cf6;
+            --bg: #0f172a;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        /* Base Reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
+        body { background: var(--bg); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+
+        /* Background Glows */
+        .glow { position: fixed; width: 40vw; height: 40vw; border-radius: 50%; filter: blur(100px); z-index: -1; opacity: 0.15; }
+        .glow-1 { top: -10%; left: -10%; background: var(--primary); }
+        .glow-2 { bottom: -10%; right: -10%; background: var(--accent); }
+
+        /* Glassmorphism Utility */
+        .glass { background: var(--glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 16px; }
+
+        /* Layout */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Header */
+        header { position: sticky; top: 0; z-index: 100; padding: 15px 0; transition: 0.3s; }
+        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; }
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; background: linear-gradient(to right, #60a5fa, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .search-input { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); color: white; padding: 8px 15px; border-radius: 20px; outline: none; width: 180px; transition: 0.3s; }
+        .search-input:focus { width: 240px; border-color: var(--primary); }
+
+        /* Hero */
+        .hero { padding: 100px 0 60px; text-align: center; }
+        .hero h1 { font-size: 3.5rem; font-weight: 900; margin-bottom: 15px; line-height: 1.1; }
+        .hero p { color: var(--text-dim); font-size: 1.2rem; margin-bottom: 30px; }
+        .btn { padding: 12px 30px; border-radius: 30px; border: none; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
+        .btn-primary:hover { transform: translateY(-2px); opacity: 0.9; }
+
+        /* Controls */
+        .controls { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 40px; justify-content: center; align-items: center; }
+        select, .toggle-container { padding: 8px 15px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 10px; color: white; outline: none; }
+
+        /* Grid & Cards */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        .card { padding: 25px; transition: 0.3s; display: flex; flex-col: column; justify-content: space-between; height: 100%; }
+        .card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.2); }
+        .card-category { font-size: 0.75rem; text-transform: uppercase; color: var(--primary); font-weight: 700; margin-bottom: 10px; display: block; }
+        .card-title { font-size: 1.25rem; margin-bottom: 15px; }
+        .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
+        .price { font-size: 1.5rem; font-weight: 800; }
+        .stock { font-size: 0.8rem; padding: 2px 8px; border-radius: 5px; }
+        .in-stock { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
+        .out-stock { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+
+        /* Skeleton */
+        .skeleton { background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%); background-size: 200% 100%; animation: loading 1.5s infinite; border-radius: 10px; height: 20px; margin-bottom: 10px; }
+        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        /* Modal */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+        .modal-content { max-width: 500px; width: 100%; padding: 40px; text-align: center; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -232,44 +288,57 @@ footer {
 <div id="menuBtn" onclick="toggleMenu()">☰</div>
 
 <!-- Side Menu -->
-#sideMenu {
-  position: fixed;
-  top: 0;
-  left: -280px;   /* hidden off screen */
-  width: 280px;
-  height: 100vh;
-  background: rgba(20, 30, 60, 0.95);
-  padding: 20px;
-  transition: left 0.3s ease;
-  z-index: 1000;
-}
+<div id="sideMenu">
+  <h3>Categories</h3>
+  <a href="#">Accounts</a>
+  <a href="#">Game Keys</a>
+  <a href="#">Boosting</a>
+  <a href="#">Gift Cards</a>
+</div>
 
-#sideMenu h3 {
-  margin-top: 0;
-  color: white;
-}
+<!-- Overlay -->
+<div id="overlay" onclick="toggleMenu()"></div>
 
-#sideMenu a {
-  display: block;
-  margin: 10px 0;
-  color: #9aa7ff;
-  text-decoration: none;
-}
+    <div class="hero container animate__animated animate__fadeIn">
+        <h1>BlazeCloud <span class="gradient-text">Digital Store</span></h1>
+        <p>Instant delivery. Premium support. Elite gaming assets.</p>
+        <button class="btn btn-primary" onclick="window.location.href='products.html'">Browse Products</button>
+        <div class="big-option-box">
+  <div class="option-wrapper">
+    <div class="option-box">About</div>
+    <div class="option-box">Contact</div>
+    <div class="option-box">Donate</div>
+  </div>
+</div>
 
-#sideMenu a:hover {
-  color: #6fbaff;
-}
+    </div>
 
-#overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
-  display: none;
-  z-index: 900;
-}
+    <main class="container" style="flex:1;">
+       
+        <div id="grid" class="grid">
+            </div>
+
+        <div id="emptyState" style="display:none; text-align:center; padding: 50px; color: var(--text-dim);">
+            <h2>No products found</h2>
+            <p>Try adjusting your filters or search terms.</p>
+        </div>
+    </main>
+
+    <div id="modal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content glass animate__animated animate__zoomIn">
+            <h2 id="modalTitle" class="gradient-text" style="font-size:2rem; margin-bottom:15px;"></h2>
+            <p id="modalDesc" style="margin-bottom:25px; color: var(--text-dim);"></p>
+            <div class="glass" style="padding:20px; margin-bottom:25px; text-align:left;">
+                <h4 style="margin-bottom:10px;">How to receive:</h4>
+                <ol style="padding-left:20px; font-size:0.9rem;">
+                    <li>Complete the checkout process.</li>
+                    <li>The key/account will be sent to your email.</li>
+                    <li>Check your 'Orders' tab for instant access.</li>
+                </ol>
+            </div>
+            <button class="btn btn-primary" style="width:100%" onclick="document.getElementById('modal').style.display='none'">Got it!</button>
+        </div>
+    </div>
 
     <script>
         function toggleMenu() {
