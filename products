@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Browse Products - BlazeCloud</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header style="padding:20px; color:white;">
+    <h1>Products</h1>
+    <p>This is where products will go later.</p>
+    <a href="index.html">← Back to Home</a>
+  </header>
+
+</body>
+</html>
