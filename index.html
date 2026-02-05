@@ -232,57 +232,44 @@ footer {
 <div id="menuBtn" onclick="toggleMenu()">☰</div>
 
 <!-- Side Menu -->
-<div id="sideMenu">
-  <h3>Categories</h3>
-  <a href="#">Accounts</a>
-  <a href="#">Game Keys</a>
-  <a href="#">Boosting</a>
-  <a href="#">Gift Cards</a>
-</div>
+#sideMenu {
+  position: fixed;
+  top: 0;
+  left: -280px;   /* hidden off screen */
+  width: 280px;
+  height: 100vh;
+  background: rgba(20, 30, 60, 0.95);
+  padding: 20px;
+  transition: left 0.3s ease;
+  z-index: 1000;
+}
 
-<!-- Overlay -->
-<div id="overlay" onclick="toggleMenu()"></div>
+#sideMenu h3 {
+  margin-top: 0;
+  color: white;
+}
 
-    <div class="hero container animate__animated animate__fadeIn">
-        <h1>BlazeCloud <span class="gradient-text">Digital Store</span></h1>
-        <p>Instant delivery. Premium support. Elite gaming assets.</p>
-        <button class="btn btn-primary" onclick="window.location.href='products.html'">Browse Products</button>
-        <div class="big-option-box">
-  <div class="option-wrapper">
-    <div class="option-box">About</div>
-    <div class="option-box">Contact</div>
-    <div class="option-box">Donate</div>
-  </div>
-</div>
+#sideMenu a {
+  display: block;
+  margin: 10px 0;
+  color: #9aa7ff;
+  text-decoration: none;
+}
 
-    </div>
+#sideMenu a:hover {
+  color: #6fbaff;
+}
 
-    <main class="container" style="flex:1;">
-       
-        <div id="grid" class="grid">
-            </div>
-
-        <div id="emptyState" style="display:none; text-align:center; padding: 50px; color: var(--text-dim);">
-            <h2>No products found</h2>
-            <p>Try adjusting your filters or search terms.</p>
-        </div>
-    </main>
-
-    <div id="modal" class="modal" onclick="closeModal(event)">
-        <div class="modal-content glass animate__animated animate__zoomIn">
-            <h2 id="modalTitle" class="gradient-text" style="font-size:2rem; margin-bottom:15px;"></h2>
-            <p id="modalDesc" style="margin-bottom:25px; color: var(--text-dim);"></p>
-            <div class="glass" style="padding:20px; margin-bottom:25px; text-align:left;">
-                <h4 style="margin-bottom:10px;">How to receive:</h4>
-                <ol style="padding-left:20px; font-size:0.9rem;">
-                    <li>Complete the checkout process.</li>
-                    <li>The key/account will be sent to your email.</li>
-                    <li>Check your 'Orders' tab for instant access.</li>
-                </ol>
-            </div>
-            <button class="btn btn-primary" style="width:100%" onclick="document.getElementById('modal').style.display='none'">Got it!</button>
-        </div>
-    </div>
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  z-index: 900;
+}
 
     <script>
         function toggleMenu() {
