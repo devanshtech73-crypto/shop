@@ -25,11 +25,25 @@
 }
 
 .option-box {
-  padding: 15px 25px;
+  padding: 16px 28px;
   border-radius: 12px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: white;
   cursor: pointer;
+
+  transition: 
+    background 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.3s ease;
+}
+
+/* hover effect */
+.option-box:hover {
+  background: #38bdf8; /* sky blue */
+  color: #0f172a; /* dark text so it’s readable */
+  transform: translateY(-3px);
+  box-shadow: 0 0 15px rgba(56,189,248,0.6);
 }
         .option-wrapper {
   margin-top: 30px;
