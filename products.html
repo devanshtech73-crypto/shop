@@ -6,19 +6,52 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="theme-buttons">
-  <button onclick="setTheme('theme1')">Category 1</button>
-  <button onclick="setTheme('theme2')">Category 2</button>
-  <button onclick="setTheme('theme3')">Category 3</button>
-  <button onclick="setTheme('theme4')">Category 4</button>
-  <button onclick="setTheme('theme5')">Category 5</button>
-</div>
 
-  <header style="padding:20px; color:white;">
-    <h1>Products</h1>
-    <p>This is where products will go later.</p>
+  <div class="theme-buttons">
+    <button onclick="setTheme('theme1')">Category 1</button>
+    <button onclick="setTheme('theme2')">Category 2</button>
+    <button onclick="setTheme('theme3')">Category 3</button>
+    <button onclick="setTheme('theme4')">Category 4</button>
+    <button onclick="setTheme('theme5')">Category 5</button>
+  </div>
+
+  <header id="mainHeader" style="padding:20px; color:white;">
+    <h1 id="title">Products</h1>
+    <p id="desc">This is where products will go later.</p>
     <a href="index.html">← Back to Home</a>
   </header>
+
+  <script>
+    function setTheme(theme) {
+      const title = document.getElementById("title");
+      const desc = document.getElementById("desc");
+
+      if (theme === "theme1") {
+        title.textContent = "Category 1";
+        desc.textContent = "Showing products for Category 1";
+      }
+
+      if (theme === "theme2") {
+        title.textContent = "Category 2";
+        desc.textContent = "Showing products for Category 2";
+      }
+
+      if (theme === "theme3") {
+        title.textContent = "Category 3";
+        desc.textContent = "Showing products for Category 3";
+      }
+
+      if (theme === "theme4") {
+        title.textContent = "Category 4";
+        desc.textContent = "Showing products for Category 4";
+      }
+
+      if (theme === "theme5") {
+        title.textContent = "Category 5";
+        desc.textContent = "Showing products for Category 5";
+      }
+    }
+  </script>
 
 </body>
 </html>
