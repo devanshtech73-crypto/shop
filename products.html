@@ -1,239 +1,242 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlazeCloud | Premium Digital Store</title>
+    <title>Blazecloud | Premium Minecraft Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #3b82f6;
-            --accent: #8b5cf6;
-            --bg: #0f172a;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --text-main: #f8fafc;
-            --text-dim: #94a3b8;
+            --accent: #ff6a00;
+            --accent-hover: #e65c00;
+            --bg-dark: #0a0a0c;
+            --card-bg: #16161a;
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
         }
 
-        /* Base Reset */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
-        body { background: var(--bg); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
 
-        /* Background Glows */
-        .glow { position: fixed; width: 40vw; height: 40vw; border-radius: 50%; filter: blur(100px); z-index: -1; opacity: 0.15; }
-        .glow-1 { top: -10%; left: -10%; background: var(--primary); }
-        .glow-2 { bottom: -10%; right: -10%; background: var(--accent); }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
 
-        /* Glassmorphism Utility */
-        .glass { background: var(--glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 16px; }
+        /* --- NAVIGATION --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: rgba(10, 10, 12, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #222;
+            backdrop-filter: blur(10px);
+        }
 
-        /* Layout */
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        
-        /* Header */
-        header { position: sticky; top: 0; z-index: 100; padding: 15px 0; transition: 0.3s; }
-        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; }
-        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; background: linear-gradient(to right, #60a5fa, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .nav-links { display: flex; gap: 20px; align-items: center; }
-        .search-input { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); color: white; padding: 8px 15px; border-radius: 20px; outline: none; width: 180px; transition: 0.3s; }
-        .search-input:focus { width: 240px; border-color: var(--primary); }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-        /* Hero */
-        .hero { padding: 100px 0 60px; text-align: center; }
-        .hero h1 { font-size: 3.5rem; font-weight: 900; margin-bottom: 15px; line-height: 1.1; }
-        .hero p { color: var(--text-dim); font-size: 1.2rem; margin-bottom: 30px; }
-        .btn { padding: 12px 30px; border-radius: 30px; border: none; font-weight: 600; cursor: pointer; transition: 0.3s; }
-        .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
-        .btn-primary:hover { transform: translateY(-2px); opacity: 0.9; }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
 
-        /* Controls */
-        .controls { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 40px; justify-content: center; align-items: center; }
-        select, .toggle-container { padding: 8px 15px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 10px; color: white; outline: none; }
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
 
-        /* Grid & Cards */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
-        .card { padding: 25px; transition: 0.3s; display: flex; flex-col: column; justify-content: space-between; height: 100%; }
-        .card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.2); }
-        .card-category { font-size: 0.75rem; text-transform: uppercase; color: var(--primary); font-weight: 700; margin-bottom: 10px; display: block; }
-        .card-title { font-size: 1.25rem; margin-bottom: 15px; }
-        .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
-        .price { font-size: 1.5rem; font-weight: 800; }
-        .stock { font-size: 0.8rem; padding: 2px 8px; border-radius: 5px; }
-        .in-stock { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
-        .out-stock { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+        .nav-links a:hover {
+            color: var(--accent);
+        }
 
-        /* Skeleton */
-        .skeleton { background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%); background-size: 200% 100%; animation: loading 1.5s infinite; border-radius: 10px; height: 20px; margin-bottom: 10px; }
-        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        /* --- HERO SECTION --- */
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: radial-gradient(circle at center, #1a1a2e 0%, #0a0a0c 100%);
+        }
 
-        /* Modal */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
-        .modal-content { max-width: 500px; width: 100%; padding: 40px; text-align: center; }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
 
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
+        header p {
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- PRODUCT GRID --- */
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #222;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 180px;
+            background: #25252b;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .product-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .buy-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            text-transform: uppercase;
+        }
+
+        .buy-btn:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 5px 15px rgba(255, 106, 0, 0.3);
+        }
+
+        .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #2ecc71;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid #222;
+            margin-top: 60px;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 600px) {
             .nav-links { display: none; }
+            header h1 { font-size: 1.8rem; }
+            .product-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <div class="glow glow-1"></div>
-    <div class="glow glow-2"></div>
 
-    <header id="mainHeader">
-        <div class="container">
-            <div class="nav-wrapper glass">
-                <div class="logo">BLAZECLOUD</div>
-                <div class="nav-links">
-                    <input type="text" id="searchInput" class="search-input" placeholder="Search products...">
-                    <a href="#" style="color:white; text-decoration:none; font-size: 0.9rem;">Support</a>
-                </div>
-            </div>
+    <nav>
+        <div class="logo">Blazecloud</div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Shop</a>
+            <a href="#">Discord</a>
+            <a href="#">Account</a>
         </div>
+    </nav>
+
+    <header>
+        <h1>Level Up Your Game</h1>
+        <p>Premium Minecraft accounts and services at unbeatable prices. Fast delivery, 100% secure.</p>
     </header>
 
-    <div class="hero container animate__animated animate__fadeIn">
-        <h1>BlazeCloud <span class="gradient-text">Digital Store</span></h1>
-        <p>Instant delivery. Premium support. Elite gaming assets.</p>
-        <button class="btn btn-primary" onclick="document.getElementById('grid').scrollIntoView({behavior:'smooth'})">Browse Products</button>
-    </div>
-
-    <main class="container">
-        <div class="controls glass">
-            <select id="catFilter"><option value="all">All Categories</option></select>
-            <select id="sortOrder">
-                <option value="newest">Newest First</option>
-                <option value="priceLow">Price: Low to High</option>
-                <option value="priceHigh">Price: High to Low</option>
-            </select>
-            <label style="cursor:pointer; display:flex; align-items:center; gap:8px;">
-                <input type="checkbox" id="stockToggle"> In Stock Only
-            </label>
-        </div>
-
-        <div id="grid" class="grid">
+    <div class="container">
+        <div class="product-grid">
+            
+            <div class="product-card">
+                <div class="badge">BEST SELLER</div>
+                <div class="product-image">🎮</div>
+                <h3>Minecraft Full Access</h3>
+                <p style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 10px;">Migrated, change email, pass, and skin.</p>
+                <span class="price">₹450</span>
+                <button class="buy-btn">Buy Now</button>
             </div>
 
-        <div id="emptyState" style="display:none; text-align:center; padding: 50px; color: var(--text-dim);">
-            <h2>No products found</h2>
-            <p>Try adjusting your filters or search terms.</p>
-        </div>
-    </main>
-
-    <div id="modal" class="modal" onclick="closeModal(event)">
-        <div class="modal-content glass animate__animated animate__zoomIn">
-            <h2 id="modalTitle" class="gradient-text" style="font-size:2rem; margin-bottom:15px;"></h2>
-            <p id="modalDesc" style="margin-bottom:25px; color: var(--text-dim);"></p>
-            <div class="glass" style="padding:20px; margin-bottom:25px; text-align:left;">
-                <h4 style="margin-bottom:10px;">How to receive:</h4>
-                <ol style="padding-left:20px; font-size:0.9rem;">
-                    <li>Complete the checkout process.</li>
-                    <li>The key/account will be sent to your email.</li>
-                    <li>Check your 'Orders' tab for instant access.</li>
-                </ol>
+            <div class="product-card">
+                <div class="product-image">🏷️</div>
+                <h3>Namechangeable Account</h3>
+                <p style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 10px;">Clean history, ready for your custom tag.</p>
+                <span class="price">₹250</span>
+                <button class="buy-btn">Buy Now</button>
             </div>
-            <button class="btn btn-primary" style="width:100%" onclick="document.getElementById('modal').style.display='none'">Got it!</button>
+
+            <div class="product-card">
+                <div class="product-image">⚔️</div>
+                <h3>SFA Account</h3>
+                <p style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 10px;">Semi-Full Access accounts available.</p>
+                <span class="price">₹150</span>
+                <button class="buy-btn" disabled style="background: #333; cursor: not-allowed;">Out of Stock</button>
+            </div>
+
         </div>
     </div>
 
-    <script>
-        const API_BASE = "https://YOUR-RAILWAY-URL"; // REPLACE THIS
-        let products = [];
+    <footer>
+        <p>&copy; 2026 Blazecloud Marketplace. Not affiliated with Mojang AB.</p>
+    </footer>
 
-        // UI Selectors
-        const grid = document.getElementById('grid');
-        const catFilter = document.getElementById('catFilter');
-        const sortOrder = document.getElementById('sortOrder');
-        const searchInput = document.getElementById('searchInput');
-        const stockToggle = document.getElementById('stockToggle');
-        const emptyState = document.getElementById('emptyState');
-
-        async function init() {
-            renderSkeletons();
-            try {
-                const res = await fetch(`${API_BASE}/api/products`);
-                if (!res.ok) throw new Error("Failed to fetch");
-                products = await res.json();
-                populateCategories();
-                applyFilters();
-            } catch (err) {
-                grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; color:#f87171;">Error: ${err.message}. Ensure backend is running and CORS is enabled.</div>`;
-            }
-        }
-
-        function renderSkeletons() {
-            grid.innerHTML = Array(8).fill(0).map(() => `
-                <div class="glass card">
-                    <div class="skeleton" style="width:40%"></div>
-                    <div class="skeleton" style="height:30px; margin-bottom:20px;"></div>
-                    <div class="skeleton" style="width:100%; height:40px;"></div>
-                </div>
-            `).join('');
-        }
-
-        function populateCategories() {
-            const categories = [...new Set(products.map(p => p.category))];
-            categories.forEach(cat => {
-                const opt = document.createElement('option');
-                opt.value = cat;
-                opt.textContent = cat;
-                catFilter.appendChild(opt);
-            });
-        }
-
-        function applyFilters() {
-            let filtered = products.filter(p => {
-                const matchesSearch = p.name.toLowerCase().includes(searchInput.value.toLowerCase()) || 
-                                     p.category.toLowerCase().includes(searchInput.value.toLowerCase());
-                const matchesCat = catFilter.value === 'all' || p.category === catFilter.value;
-                const matchesStock = !stockToggle.checked || p.stockStatus === true;
-                return matchesSearch && matchesCat && matchesStock;
-            });
-
-            // Sorting
-            if (sortOrder.value === 'priceLow') filtered.sort((a,b) => parseFloat(a.price) - parseFloat(b.price));
-            if (sortOrder.value === 'priceHigh') filtered.sort((a,b) => parseFloat(b.price) - parseFloat(a.price));
-            if (sortOrder.value === 'newest') filtered.reverse();
-
-            renderProducts(filtered);
-        }
-
-        function renderProducts(list) {
-            emptyState.style.display = list.length === 0 ? 'block' : 'none';
-            grid.innerHTML = list.map(p => `
-                <div class="glass card animate__animated animate__fadeIn">
-                    <div>
-                        <span class="card-category">${p.category}</span>
-                        <h3 class="card-title">${p.name}</h3>
-                        <span class="stock ${p.stockStatus ? 'in-stock' : 'out-stock'}">
-                            ${p.stockStatus ? 'In Stock' : 'Out of Stock'}
-                        </span>
-                    </div>
-                    <div class="card-footer">
-                        <span class="price">₹${p.price}</span>
-                        <button class="btn btn-primary btn-sm" onclick="openBuyModal('${p.name}', '${p.category}')">Get</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function openBuyModal(name, cat) {
-            document.getElementById('modalTitle').innerText = name;
-            document.getElementById('modalDesc').innerText = `Category: ${cat} | Digital Delivery`;
-            document.getElementById('modal').style.display = 'flex';
-        }
-
-        function closeModal(e) {
-            if(e.target.id === 'modal') e.target.style.display = 'none';
-        }
-
-        // Listeners
-        searchInput.addEventListener('input', applyFilters);
-        catFilter.addEventListener('change', applyFilters);
-        sortOrder.addEventListener('change', applyFilters);
-        stockToggle.addEventListener('change', applyFilters);
-
-        init();
-    </script>
 </body>
 </html>
