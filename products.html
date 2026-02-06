@@ -4,161 +4,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blazecloud | Crafting Something Epic</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>BlazeCloud | Premium Digital Store</title>
     <style>
         :root {
-            --primary: #ff6a00;
-            --secondary: #ee0979;
-            --bg: #0f0c29;
-            --text: #ffffff;
+            --primary: #3b82f6;
+            --accent: #8b5cf6;
+            --bg: #0f172a;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif;
-        }
+        /* Base Reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
+        body { background: var(--bg); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
 
-        body {
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text);
-            overflow: hidden;
-        }
+        /* Background Glows */
+        .glow { position: fixed; width: 40vw; height: 40vw; border-radius: 50%; filter: blur(100px); z-index: -1; opacity: 0.15; }
+        .glow-1 { top: -10%; left: -10%; background: var(--primary); }
+        .glow-2 { bottom: -10%; right: -10%; background: var(--accent); }
 
-        /* Animated Background Elements */
-        .particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
+        /* Glassmorphism Utility */
+        .glass { background: var(--glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 16px; }
 
-        .container {
-            text-align: center;
-            z-index: 1;
-            padding: 20px;
-        }
+        /* Layout */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Header */
+        header { position: sticky; top: 0; z-index: 100; padding: 15px 0; transition: 0.3s; }
+        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; }
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; background: linear-gradient(to right, #60a5fa, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .search-input { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); color: white; padding: 8px 15px; border-radius: 20px; outline: none; width: 180px; transition: 0.3s; }
+        .search-input:focus { width: 240px; border-color: var(--primary); }
 
-        .logo {
-            font-size: 4rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: glow 3s ease-in-out infinite alternate;
-            margin-bottom: 10px;
-        }
+        /* Hero */
+        .hero { padding: 100px 0 60px; text-align: center; }
+        .hero h1 { font-size: 3.5rem; font-weight: 900; margin-bottom: 15px; line-height: 1.1; }
+        .hero p { color: var(--text-dim); font-size: 1.2rem; margin-bottom: 30px; }
+        .btn { padding: 12px 30px; border-radius: 30px; border: none; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
+        .btn-primary:hover { transform: translateY(-2px); opacity: 0.9; }
 
-        .status-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            margin-bottom: 30px;
-            animation: fadeIn 2s ease-out;
-        }
+        /* Controls */
+        .controls { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 40px; justify-content: center; align-items: center; }
+        select, .toggle-container { padding: 8px 15px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 10px; color: white; outline: none; }
 
-        h2 {
-            font-size: 1.5rem;
-            font-weight: 400;
-            opacity: 0.8;
-            margin-bottom: 40px;
-        }
+        /* Grid & Cards */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        .card { padding: 25px; transition: 0.3s; display: flex; flex-col: column; justify-content: space-between; height: 100%; }
+        .card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.2); }
+        .card-category { font-size: 0.75rem; text-transform: uppercase; color: var(--primary); font-weight: 700; margin-bottom: 10px; display: block; }
+        .card-title { font-size: 1.25rem; margin-bottom: 15px; }
+        .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
+        .price { font-size: 1.5rem; font-weight: 800; }
+        .stock { font-size: 0.8rem; padding: 2px 8px; border-radius: 5px; }
+        .in-stock { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
+        .out-stock { background: rgba(239, 68, 68, 0.2); color: #f87171; }
 
-        /* Minecraft-inspired Progress Bar */
-        .progress-container {
-            width: 300px;
-            height: 10px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            margin: 0 auto;
-            position: relative;
-            overflow: hidden;
-        }
+        /* Skeleton */
+        .skeleton { background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%); background-size: 200% 100%; animation: loading 1.5s infinite; border-radius: 10px; height: 20px; margin-bottom: 10px; }
+        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-        .progress-bar {
-            width: 65%;
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 10px;
-            animation: slide 2s ease-in-out infinite;
-        }
+        /* Modal */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+        .modal-content { max-width: 500px; width: 100%; padding: 40px; text-align: center; }
 
-        /* Floating Animation */
-        .floating-box {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes glow {
-            from { filter: drop-shadow(0 0 10px rgba(255, 106, 0, 0.2)); }
-            to { filter: drop-shadow(0 0 30px rgba(255, 106, 0, 0.6)); }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        @keyframes slide {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(200%); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Footer links */
-        .socials {
-            margin-top: 50px;
-        }
-
-        .socials a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 0.8rem;
-            opacity: 0.6;
-            transition: 0.3s;
-        }
-
-        .socials a:hover {
-            opacity: 1;
-            color: var(--primary);
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
         }
     </style>
 </head>
 <body>
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
 
-    <div class="container">
-        <div class="floating-box">
-            <div class="status-badge">RELOADING CHUNKS...</div>
-            <h1 class="logo">Blazecloud</h1>
-            <h2>The ultimate Minecraft marketplace.</h2>
+    <header id="mainHeader">
+        <div class="container">
+            <div class="nav-wrapper glass">
+                <div class="logo">BLAZECLOUD</div>
+                <div class="nav-links">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search products...">
+                    <a href="#" style="color:white; text-decoration:none; font-size: 0.9rem;">Support</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="hero container animate__animated animate__fadeIn">
+        <h1>BlazeCloud <span class="gradient-text">Digital Store</span></h1>
+        <p>Instant delivery. Premium support. Elite gaming assets.</p>
+        <button class="btn btn-primary" onclick="document.getElementById('grid').scrollIntoView({behavior:'smooth'})">Browse Products</button>
+    </div>
+
+    <main class="container">
+        <div class="controls glass">
+            <select id="catFilter"><option value="all">All Categories</option></select>
+            <select id="sortOrder">
+                <option value="newest">Newest First</option>
+                <option value="priceLow">Price: Low to High</option>
+                <option value="priceHigh">Price: High to Low</option>
+            </select>
+            <label style="cursor:pointer; display:flex; align-items:center; gap:8px;">
+                <input type="checkbox" id="stockToggle"> In Stock Only
+            </label>
         </div>
 
-        <div class="progress-container">
-            <div class="progress-bar"></div>
-        </div>
-        <p style="margin-top: 15px; font-size: 0.8rem; color: #888;">Leveling up to 100%</p>
+        <div id="grid" class="grid">
+            </div>
 
-        <div class="socials">
-            <a href="#">DISCORD</a>
-            <a href="#">TWITTER</a>
-            <a href="#">SUPPORT</a>
+        <div id="emptyState" style="display:none; text-align:center; padding: 50px; color: var(--text-dim);">
+            <h2>No products found</h2>
+            <p>Try adjusting your filters or search terms.</p>
+        </div>
+    </main>
+
+    <div id="modal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content glass animate__animated animate__zoomIn">
+            <h2 id="modalTitle" class="gradient-text" style="font-size:2rem; margin-bottom:15px;"></h2>
+            <p id="modalDesc" style="margin-bottom:25px; color: var(--text-dim);"></p>
+            <div class="glass" style="padding:20px; margin-bottom:25px; text-align:left;">
+                <h4 style="margin-bottom:10px;">How to receive:</h4>
+                <ol style="padding-left:20px; font-size:0.9rem;">
+                    <li>Complete the checkout process.</li>
+                    <li>The key/account will be sent to your email.</li>
+                    <li>Check your 'Orders' tab for instant access.</li>
+                </ol>
+            </div>
+            <button class="btn btn-primary" style="width:100%" onclick="document.getElementById('modal').style.display='none'">Got it!</button>
         </div>
     </div>
 
+    <script>
+        const API_BASE = "https://YOUR-RAILWAY-URL"; // REPLACE THIS
+        let products = [];
+
+        // UI Selectors
+        const grid = document.getElementById('grid');
+        const catFilter = document.getElementById('catFilter');
+        const sortOrder = document.getElementById('sortOrder');
+        const searchInput = document.getElementById('searchInput');
+        const stockToggle = document.getElementById('stockToggle');
+        const emptyState = document.getElementById('emptyState');
+
+        async function init() {
+            renderSkeletons();
+            try {
+                const res = await fetch(`${API_BASE}/api/products`);
+                if (!res.ok) throw new Error("Failed to fetch");
+                products = await res.json();
+                populateCategories();
+                applyFilters();
+            } catch (err) {
+                grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; color:#f87171;">Error: ${err.message}. Ensure backend is running and CORS is enabled.</div>`;
+            }
+        }
+
+        function renderSkeletons() {
+            grid.innerHTML = Array(8).fill(0).map(() => `
+                <div class="glass card">
+                    <div class="skeleton" style="width:40%"></div>
+                    <div class="skeleton" style="height:30px; margin-bottom:20px;"></div>
+                    <div class="skeleton" style="width:100%; height:40px;"></div>
+                </div>
+            `).join('');
+        }
+
+        function populateCategories() {
+            const categories = [...new Set(products.map(p => p.category))];
+            categories.forEach(cat => {
+                const opt = document.createElement('option');
+                opt.value = cat;
+                opt.textContent = cat;
+                catFilter.appendChild(opt);
+            });
+        }
+
+        function applyFilters() {
+            let filtered = products.filter(p => {
+                const matchesSearch = p.name.toLowerCase().includes(searchInput.value.toLowerCase()) || 
+                                     p.category.toLowerCase().includes(searchInput.value.toLowerCase());
+                const matchesCat = catFilter.value === 'all' || p.category === catFilter.value;
+                const matchesStock = !stockToggle.checked || p.stockStatus === true;
+                return matchesSearch && matchesCat && matchesStock;
+            });
+
+            // Sorting
+            if (sortOrder.value === 'priceLow') filtered.sort((a,b) => parseFloat(a.price) - parseFloat(b.price));
+            if (sortOrder.value === 'priceHigh') filtered.sort((a,b) => parseFloat(b.price) - parseFloat(a.price));
+            if (sortOrder.value === 'newest') filtered.reverse();
+
+            renderProducts(filtered);
+        }
+
+        function renderProducts(list) {
+            emptyState.style.display = list.length === 0 ? 'block' : 'none';
+            grid.innerHTML = list.map(p => `
+                <div class="glass card animate__animated animate__fadeIn">
+                    <div>
+                        <span class="card-category">${p.category}</span>
+                        <h3 class="card-title">${p.name}</h3>
+                        <span class="stock ${p.stockStatus ? 'in-stock' : 'out-stock'}">
+                            ${p.stockStatus ? 'In Stock' : 'Out of Stock'}
+                        </span>
+                    </div>
+                    <div class="card-footer">
+                        <span class="price">₹${p.price}</span>
+                        <button class="btn btn-primary btn-sm" onclick="openBuyModal('${p.name}', '${p.category}')">Get</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openBuyModal(name, cat) {
+            document.getElementById('modalTitle').innerText = name;
+            document.getElementById('modalDesc').innerText = `Category: ${cat} | Digital Delivery`;
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function closeModal(e) {
+            if(e.target.id === 'modal') e.target.style.display = 'none';
+        }
+
+        // Listeners
+        searchInput.addEventListener('input', applyFilters);
+        catFilter.addEventListener('change', applyFilters);
+        sortOrder.addEventListener('change', applyFilters);
+        stockToggle.addEventListener('change', applyFilters);
+
+        init();
+    </script>
 </body>
 </html>
