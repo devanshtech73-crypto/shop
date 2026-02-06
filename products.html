@@ -1,240 +1,252 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BlazeCloud | Premium Digital Store</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
         :root {
-            --primary: #3b82f6;
-            --accent: #8b5cf6;
-            --bg: #0f172a;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --text-main: #f8fafc;
-            --text-dim: #94a3b8;
+            --brand-fire: #ff4d00;
+            --brand-cloud: #00d2ff;
         }
-
-        /* Base Reset */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
-        body { background: var(--bg); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
-
-        /* Background Glows */
-        .glow { position: fixed; width: 40vw; height: 40vw; border-radius: 50%; filter: blur(100px); z-index: -1; opacity: 0.15; }
-        .glow-1 { top: -10%; left: -10%; background: var(--primary); }
-        .glow-2 { bottom: -10%; right: -10%; background: var(--accent); }
-
-        /* Glassmorphism Utility */
-        .glass { background: var(--glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 16px; }
-
-        /* Layout */
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        
-        /* Header */
-        header { position: sticky; top: 0; z-index: 100; padding: 15px 0; transition: 0.3s; }
-        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; }
-        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; background: linear-gradient(to right, #60a5fa, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .nav-links { display: flex; gap: 20px; align-items: center; }
-        .search-input { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); color: white; padding: 8px 15px; border-radius: 20px; outline: none; width: 180px; transition: 0.3s; }
-        .search-input:focus { width: 240px; border-color: var(--primary); }
-
-        /* Hero */
-        .hero { padding: 100px 0 60px; text-align: center; }
-        .hero h1 { font-size: 3.5rem; font-weight: 900; margin-bottom: 15px; line-height: 1.1; }
-        .hero p { color: var(--text-dim); font-size: 1.2rem; margin-bottom: 30px; }
-        .btn { padding: 12px 30px; border-radius: 30px; border: none; font-weight: 600; cursor: pointer; transition: 0.3s; }
-        .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
-        .btn-primary:hover { transform: translateY(-2px); opacity: 0.9; }
-
-        /* Controls */
-        .controls { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 40px; justify-content: center; align-items: center; }
-        select, .toggle-container { padding: 8px 15px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 10px; color: white; outline: none; }
-
-        /* Grid & Cards */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
-        .card { padding: 25px; transition: 0.3s; display: flex; flex-col: column; justify-content: space-between; height: 100%; }
-        .card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.2); }
-        .card-category { font-size: 0.75rem; text-transform: uppercase; color: var(--primary); font-weight: 700; margin-bottom: 10px; display: block; }
-        .card-title { font-size: 1.25rem; margin-bottom: 15px; }
-        .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
-        .price { font-size: 1.5rem; font-weight: 800; }
-        .stock { font-size: 0.8rem; padding: 2px 8px; border-radius: 5px; }
-        .in-stock { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
-        .out-stock { background: rgba(239, 68, 68, 0.2); color: #f87171; }
-
-        /* Skeleton */
-        .skeleton { background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%); background-size: 200% 100%; animation: loading 1.5s infinite; border-radius: 10px; height: 20px; margin-bottom: 10px; }
-        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
-        /* Modal */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
-        .modal-content { max-width: 500px; width: 100%; padding: 40px; text-align: center; }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .nav-links { display: none; }
+        .blaze-gradient {
+            background: linear-gradient(135deg, var(--brand-fire), #ff9100);
+        }
+        .cloud-glass {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .blaze-card:hover {
+            box-shadow: 0 0 20px rgba(255, 77, 0, 0.3);
+            border-color: var(--brand-fire);
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
         }
     </style>
 </head>
-<body>
-    <div class="glow glow-1"></div>
-    <div class="glow glow-2"></div>
+<body class="min-h-screen bg-[#0f172a] text-slate-200">
 
-    <header id="mainHeader">
-        <div class="container">
-            <div class="nav-wrapper glass">
-                <div class="logo">BLAZECLOUD</div>
-                <div class="nav-links">
-                    <input type="text" id="searchInput" class="search-input" placeholder="Search products...">
-                    <a href="#" style="color:white; text-decoration:none; font-size: 0.9rem;">Support</a>
+    <nav class="navbar cloud-glass sticky top-0 z-[100] px-4 md:px-12">
+        <div class="flex-1">
+            <div class="flex items-center gap-3 group cursor-pointer">
+                <div class="p-2 blaze-gradient rounded-xl rotate-3 group-hover:rotate-12 transition-transform">
+                    <i class="fa-solid fa-cloud-bolt text-white text-xl"></i>
                 </div>
+                <span class="text-2xl font-black tracking-tighter text-white">BLAZE<span class="text-[#00d2ff]">CLOUD</span></span>
             </div>
+        </div>
+        <div class="flex-none gap-2">
+            <button onclick="showSection('shop')" class="btn btn-ghost btn-sm text-cloud font-bold">Store</button>
+            <button onclick="showSection('admin')" class="btn btn-sm btn-outline border-orange-500 text-orange-500 hover:bg-orange-500">Admin Panel</button>
+        </div>
+    </nav>
+
+    <header id="hero" class="relative py-16 overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full opacity-10 pointer-events-none">
+            <div class="absolute top-0 w-96 h-96 bg-orange-600 rounded-full blur-[100px]"></div>
+            <div class="absolute bottom-0 right-0 w-80 h-80 bg-cyan-500 rounded-full blur-[100px]"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 text-center animate__animated animate__fadeInDown">
+            <h1 class="text-6xl font-black italic mb-4">FUEL YOUR <span class="text-orange-500">GAMING</span></h1>
+            <p class="text-lg text-slate-400 max-w-2xl mx-auto">Instant delivery, 24/7 Support, and the hottest deals on the market.</p>
         </div>
     </header>
 
-    <div class="hero container animate__animated animate__fadeIn">
-        <h1>BlazeCloud <span class="gradient-text">Digital Store</span></h1>
-        <p>Instant delivery. Premium support. Elite gaming assets.</p>
-        <button class="btn btn-primary" onclick="document.getElementById('grid').scrollIntoView({behavior:'smooth'})">Browse Products</button>
-    </div>
-
-    <main class="container">
-        <div class="controls glass">
-            <select id="catFilter"><option value="all">All Categories</option></select>
-            <select id="sortOrder">
-                <option value="newest">Newest First</option>
-                <option value="priceLow">Price: Low to High</option>
-                <option value="priceHigh">Price: High to Low</option>
-            </select>
-            <label style="cursor:pointer; display:flex; align-items:center; gap:8px;">
-                <input type="checkbox" id="stockToggle"> In Stock Only
-            </label>
-        </div>
-
-        <div id="grid" class="grid">
+    <main id="shop-section" class="container mx-auto p-6">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+            <div class="tabs tabs-boxed bg-slate-900 border border-slate-800 p-1">
+                <a onclick="filterByCat('All')" class="tab tab-active cat-tab">All Items</a>
+                <a onclick="filterByCat('Minecraft')" class="tab cat-tab">Minecraft</a>
+                <a onclick="filterByCat('Nitro')" class="tab cat-tab">Discord</a>
+                <a onclick="filterByCat('Gaming')" class="tab cat-tab">Accounts</a>
             </div>
-
-        <div id="emptyState" style="display:none; text-align:center; padding: 50px; color: var(--text-dim);">
-            <h2>No products found</h2>
-            <p>Try adjusting your filters or search terms.</p>
+            <div class="relative w-full md:w-72">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 opacity-50"></i>
+                <input id="searchInput" onkeyup="searchItems()" type="text" placeholder="Search product..." class="input input-bordered w-full pl-12 bg-slate-900 focus:border-orange-500" />
+            </div>
         </div>
+
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate__animated animate__fadeInUp">
+            </div>
     </main>
 
-    <div id="modal" class="modal" onclick="closeModal(event)">
-        <div class="modal-content glass animate__animated animate__zoomIn">
-            <h2 id="modalTitle" class="gradient-text" style="font-size:2rem; margin-bottom:15px;"></h2>
-            <p id="modalDesc" style="margin-bottom:25px; color: var(--text-dim);"></p>
-            <div class="glass" style="padding:20px; margin-bottom:25px; text-align:left;">
-                <h4 style="margin-bottom:10px;">How to receive:</h4>
-                <ol style="padding-left:20px; font-size:0.9rem;">
-                    <li>Complete the checkout process.</li>
-                    <li>The key/account will be sent to your email.</li>
-                    <li>Check your 'Orders' tab for instant access.</li>
-                </ol>
-            </div>
-            <button class="btn btn-primary" style="width:100%" onclick="document.getElementById('modal').style.display='none'">Got it!</button>
+    <section id="admin-section" class="container mx-auto p-6 hidden">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold italic text-orange-500">Inventory Management</h2>
+            <button class="btn btn-success" onclick="openModal()"><i class="fa-solid fa-plus"></i> Add Item</button>
         </div>
-    </div>
+        <div class="overflow-x-auto cloud-glass rounded-2xl">
+            <table class="table w-full">
+                <thead class="text-orange-500">
+                    <tr><th>Item Name</th><th>Price</th><th>Category</th><th>Actions</th></tr>
+                </thead>
+                <tbody id="admin-table-body"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <dialog id="product_modal" class="modal">
+        <div class="modal-box cloud-glass">
+            <h3 id="modal-title" class="text-xl font-bold mb-4">Edit Listing</h3>
+            <div class="space-y-4">
+                <input type="hidden" id="edit-id">
+                <input type="text" id="p-name" placeholder="Name" class="input input-bordered w-full bg-slate-800" />
+                <input type="text" id="p-price" placeholder="Price (e.g. 80rs)" class="input input-bordered w-full bg-slate-800" />
+                <select id="p-cat" class="select select-bordered w-full bg-slate-800">
+                    <option>Minecraft</option>
+                    <option>Nitro</option>
+                    <option>Streaming</option>
+                    <option>Gaming</option>
+                    <option>Boosts</option>
+                </select>
+            </div>
+            <div class="modal-action">
+                <button class="btn btn-ghost" onclick="product_modal.close()">Cancel</button>
+                <button class="btn btn-orange-500 bg-orange-600 text-white" onclick="saveProduct()">Save Changes</button>
+            </div>
+        </div>
+    </dialog>
 
     <script>
-        const API_BASE = "https://YOUR-RAILWAY-URL"; // REPLACE THIS
-        let products = [];
+        // DATA INITIALIZATION
+        let products = JSON.parse(localStorage.getItem('blazecloud_data')) || [
+            { id: 1, name: "Minecraft Premium Temp", price: "30rs", cat: "Minecraft" },
+            { id: 2, name: "Minecraft Premium Perm", price: "80rs", cat: "Minecraft" },
+            { id: 3, name: "Minecraft Name Changeable", price: "250rs", cat: "Minecraft" },
+            { id: 4, name: "Crunchyroll 1 Month", price: "30rs", cat: "Streaming" },
+            { id: 5, name: "Xbox Game Pass Ultimate", price: "80rs", cat: "Gaming" },
+            { id: 6, name: "1 Month Nitro (ID)", price: "130rs", cat: "Nitro" },
+            { id: 7, name: "3 Month Nitro (ID)", price: "300rs", cat: "Nitro" },
+            { id: 8, name: "1 Month 14x Server Boosts", price: "400rs", cat: "Boosts" },
+            { id: 9, name: "Steam Random 5 Games", price: "30rs", cat: "Gaming" }
+        ];
 
-        // UI Selectors
-        const grid = document.getElementById('grid');
-        const catFilter = document.getElementById('catFilter');
-        const sortOrder = document.getElementById('sortOrder');
-        const searchInput = document.getElementById('searchInput');
-        const stockToggle = document.getElementById('stockToggle');
-        const emptyState = document.getElementById('emptyState');
+        function renderShop(data = products) {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = data.map(p => `
+                <div class="card bg-slate-900 border border-slate-800 blaze-card transition-all duration-300">
+                    <div class="card-body">
+                        <div class="flex justify-between">
+                            <span class="text-[10px] uppercase tracking-widest text-orange-500 font-bold">${p.cat}</span>
+                            <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                        </div>
+                        <h2 class="card-title text-white group-hover:text-orange-400 transition-colors">${p.name}</h2>
+                        <div class="flex items-center justify-between mt-6">
+                            <span class="text-2xl font-black text-white italic">₹${p.price.replace('rs', '')}</span>
+                            <button onclick="handleBuy('${p.name}')" class="btn btn-sm btn-primary blaze-gradient border-none text-white shadow-lg">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-        async function init() {
-            renderSkeletons();
-            try {
-                const res = await fetch(`${API_BASE}/api/products`);
-                if (!res.ok) throw new Error("Failed to fetch");
-                products = await res.json();
-                populateCategories();
-                applyFilters();
-            } catch (err) {
-                grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; color:#f87171;">Error: ${err.message}. Ensure backend is running and CORS is enabled.</div>`;
+        function handleBuy(name) {
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#ff4d00', '#00d2ff'] });
+            Swal.fire({
+                background: '#0f172a',
+                color: '#fff',
+                title: 'Great Choice!',
+                text: `You've selected ${name}. Proceed to checkout?`,
+                showCancelButton: true,
+                confirmButtonText: '<i class="fa-brands fa-whatsapp"></i> Buy via WhatsApp',
+                confirmButtonColor: '#25D366'
+            });
+        }
+
+        // ADMIN FUNCTIONS
+        function renderAdmin() {
+            const tbody = document.getElementById('admin-table-body');
+            tbody.innerHTML = products.map(p => `
+                <tr class="border-b border-slate-800">
+                    <td><span class="font-bold text-white">${p.name}</span></td>
+                    <td><span class="badge badge-outline border-orange-500 text-orange-500 font-bold">${p.price}</span></td>
+                    <td><span class="badge badge-ghost">${p.cat}</span></td>
+                    <td>
+                        <button class="btn btn-square btn-sm btn-ghost" onclick="editProduct(${p.id})"><i class="fa-solid fa-pen"></i></button>
+                        <button class="btn btn-square btn-sm btn-ghost text-error" onclick="deleteProduct(${p.id})"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filterByCat(cat) {
+            document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('tab-active'));
+            event.target.classList.add('tab-active');
+            const filtered = cat === 'All' ? products : products.filter(p => p.cat === cat);
+            renderShop(filtered);
+        }
+
+        function searchItems() {
+            const val = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = products.filter(p => p.name.toLowerCase().includes(val));
+            renderShop(filtered);
+        }
+
+        function showSection(sec) {
+            document.getElementById('shop-section').classList.toggle('hidden', sec === 'admin');
+            document.getElementById('hero').classList.toggle('hidden', sec === 'admin');
+            document.getElementById('admin-section').classList.toggle('hidden', sec === 'shop');
+            if(sec === 'admin') renderAdmin();
+        }
+
+        function openModal(id = null) {
+            const modal = document.getElementById('product_modal');
+            if(id) {
+                const p = products.find(x => x.id === id);
+                document.getElementById('edit-id').value = p.id;
+                document.getElementById('p-name').value = p.name;
+                document.getElementById('p-price').value = p.price;
+                document.getElementById('p-cat').value = p.cat;
+            } else {
+                document.getElementById('edit-id').value = "";
+                document.getElementById('p-name').value = "";
+                document.getElementById('p-price').value = "";
             }
+            modal.showModal();
         }
 
-        function renderSkeletons() {
-            grid.innerHTML = Array(8).fill(0).map(() => `
-                <div class="glass card">
-                    <div class="skeleton" style="width:40%"></div>
-                    <div class="skeleton" style="height:30px; margin-bottom:20px;"></div>
-                    <div class="skeleton" style="width:100%; height:40px;"></div>
-                </div>
-            `).join('');
+        function saveProduct() {
+            const id = document.getElementById('edit-id').value;
+            const name = document.getElementById('p-name').value;
+            const price = document.getElementById('p-price').value;
+            const cat = document.getElementById('p-cat').value;
+
+            if(id) {
+                products = products.map(p => p.id == id ? {...p, name, price, cat} : p);
+            } else {
+                products.push({ id: Date.now(), name, price, cat });
+            }
+            
+            localStorage.setItem('blazecloud_data', JSON.stringify(products));
+            renderShop();
+            renderAdmin();
+            product_modal.close();
+            Swal.fire({ icon: 'success', title: 'Catalog Updated', background: '#0f172a', color: '#fff', timer: 1000, showConfirmButton: false });
         }
 
-        function populateCategories() {
-            const categories = [...new Set(products.map(p => p.category))];
-            categories.forEach(cat => {
-                const opt = document.createElement('option');
-                opt.value = cat;
-                opt.textContent = cat;
-                catFilter.appendChild(opt);
-            });
+        function deleteProduct(id) {
+            products = products.filter(p => p.id !== id);
+            localStorage.setItem('blazecloud_data', JSON.stringify(products));
+            renderAdmin();
+            renderShop();
         }
 
-        function applyFilters() {
-            let filtered = products.filter(p => {
-                const matchesSearch = p.name.toLowerCase().includes(searchInput.value.toLowerCase()) || 
-                                     p.category.toLowerCase().includes(searchInput.value.toLowerCase());
-                const matchesCat = catFilter.value === 'all' || p.category === catFilter.value;
-                const matchesStock = !stockToggle.checked || p.stockStatus === true;
-                return matchesSearch && matchesCat && matchesStock;
-            });
+        function editProduct(id) { openModal(id); }
 
-            // Sorting
-            if (sortOrder.value === 'priceLow') filtered.sort((a,b) => parseFloat(a.price) - parseFloat(b.price));
-            if (sortOrder.value === 'priceHigh') filtered.sort((a,b) => parseFloat(b.price) - parseFloat(a.price));
-            if (sortOrder.value === 'newest') filtered.reverse();
-
-            renderProducts(filtered);
-        }
-
-        function renderProducts(list) {
-            emptyState.style.display = list.length === 0 ? 'block' : 'none';
-            grid.innerHTML = list.map(p => `
-                <div class="glass card animate__animated animate__fadeIn">
-                    <div>
-                        <span class="card-category">${p.category}</span>
-                        <h3 class="card-title">${p.name}</h3>
-                        <span class="stock ${p.stockStatus ? 'in-stock' : 'out-stock'}">
-                            ${p.stockStatus ? 'In Stock' : 'Out of Stock'}
-                        </span>
-                    </div>
-                    <div class="card-footer">
-                        <span class="price">₹${p.price}</span>
-                        <button class="btn btn-primary btn-sm" onclick="openBuyModal('${p.name}', '${p.category}')">Get</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function openBuyModal(name, cat) {
-            document.getElementById('modalTitle').innerText = name;
-            document.getElementById('modalDesc').innerText = `Category: ${cat} | Digital Delivery`;
-            document.getElementById('modal').style.display = 'flex';
-        }
-
-        function closeModal(e) {
-            if(e.target.id === 'modal') e.target.style.display = 'none';
-        }
-
-        // Listeners
-        searchInput.addEventListener('input', applyFilters);
-        catFilter.addEventListener('change', applyFilters);
-        sortOrder.addEventListener('change', applyFilters);
-        stockToggle.addEventListener('change', applyFilters);
-
-        init();
+        // Boot
+        renderShop();
     </script>
 </body>
 </html>
