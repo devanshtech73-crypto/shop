@@ -1,1 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BlazeCloud - Premium Gaming Services</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    
+    /* Main gradient background */
+    .main-bg {
+      min-height: 100vh;
+      background: linear-gradient(to bottom, #0f172a, #581c87, #0f172a);
+    }
+    
+    /* Hero section */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 5rem 1rem 6rem;
+    }
+    
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 14c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6 2.69-6 6-6M12 34c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6 2.69-6 6-6'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.4;
+    }
+    
+    .container {
+      max-width: 80rem;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    .text-center { text-align: center; }
+    
+    .badge {
+      display: inline-block;
+      margin-bottom: 1rem;
+      padding: 0.5rem 1rem;
+      background: rgba(168, 85, 247, 0.2);
+      border: 1px solid rgba(168, 85, 247, 0.5);
+      border-radius: 9999px;
+      color: #d8b4fe;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+    
+    .hero-title {
+      font-size: 3rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(to right, #c084fc, #db2777);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: #d1d5db;
+      margin-bottom: 2rem;
+      max-width: 48rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    @media (min-width: 640px) {
+      .btn-group { flex-direction: row; }
+      .hero-title { font-size: 3.75rem; }
+      .hero-subtitle { font-size: 1.5rem; }
+    }
+    
+    @media (min-width: 1024px) {
+      .hero-title { font-size: 4.5rem; }
+    }
+    
+    .btn-primary {
+      padding: 1rem 2rem;
+      background: linear-gradient(to right, #9333ea, #db2777);
+      color: white;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      transition: all 0.3s;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-primary:hover {
+      background: linear-gradient(to right, #7e22ce, #be185d);
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+    }
+    
+    .btn-secondary {
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(4px);
+      color: white;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s;
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Services section */
+    .section {
+      padding: 5rem 1rem;
+    }
+    
+    .section-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: white;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    
+    .section-subtitle {
+      color: #9ca3af;
+      text-align: center;
+      margin-bottom: 3rem;
+      max-width: 42rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .grid-4 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    
+    @media (min-width: 768px) {
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    }
+    
+    @media (min-width: 1024px) {
+      .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    }
+    
+    .service-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    
+    .service-card:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: scale(1.05);
+    }
+    
+    .service-card:hover:nth-child(1),
+    .service-card:hover:nth-child(2) {
+      border-color: rgba(34, 197, 94, 0.5);
+    }
+    
+    .service-card:hover:nth-child(3) {
+      border-color: rgba(59, 130, 246, 0.5);
+    }
+    
+    .service-card:hover:nth-child(4) {
+      border-color: rgba(249, 115, 22, 0.5);
+    }
+    
+    .service-icon { font-size: 2.25rem; margin-bottom: 1rem; }
+    .service-title { font-size: 1.25rem; font-weight: 700; color: white; margin-bottom: 0.5rem; }
+    .service-desc { color: #9ca3af; }
+    
+    /* Features section */
+    .features-bg { background-color: rgba(0, 0, 0, 0.2); }
+    
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    
+    @media (min-width: 768px) {
+      .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    }
+    
+    .feature-item { text-align: center; }
+    
+    .feature-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 4rem;
+      height: 4rem;
+      border-radius: 9999px;
+      margin-bottom: 1rem;
+    }
+    
+    .feature-icon.purple { background-color: rgba(168, 85, 247, 0.2); }
+    .feature-icon.pink { background-color: rgba(236, 72, 153, 0.2); }
+    .feature-icon.blue { background-color: rgba(59, 130, 246, 0.2); }
+    
+    .feature-icon span { font-size: 1.875rem; }
+    
+    .feature-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+    
+    .feature-desc { color: #9ca3af; }
+    
+    /* Community section */
+    .community-box {
+      background: linear-gradient(to right, rgba(88, 28, 135, 0.5), rgba(131, 24, 67, 0.5));
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 1rem;
+      padding: 2rem;
+      text-align: center;
+    }
+    
+    @media (min-width: 640px) {
+      .community-box { padding: 3rem; }
+    }
+    
+    .community-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 1rem;
+    }
+    
+    .community-text {
+      font-size: 1.25rem;
+      color: #d1d5db;
+      margin-bottom: 2rem;
+      max-width: 42rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .btn-discord {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      background-color: #5865F2;
+      color: white;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      transition: all 0.3s;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-discord:hover {
+      background-color: #4752C4;
+      transform: scale(1.05);
+    }
+    
+    .btn-minecraft {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      background-color: #16a34a;
+      color: white;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      transition: all 0.3s;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-minecraft:hover {
+      background-color: #15803d;
+      transform: scale(1.05);
+    }
+    
+    .stats {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      color: #d1d5db;
+    }
+    
+    .stat-value {
+      font-size: 1.875rem;
+      font-weight: 700;
+      color: white;
+    }
+    
+    .stat-label { font-size: 0.875rem; }
+    
+    /* Footer */
+    .footer {
+      padding: 3rem 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
+    
+    .footer-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+    
+    .footer-text {
+      color: #9ca3af;
+      margin-bottom: 1rem;
+    }
+    
+    .footer-copy {
+      color: #6b7280;
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-bg">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="container" style="position: relative; text-align: center;">
+        <div class="badge">🎮 Premium Gaming Services</div>
+        
+        <h1 class="hero-title">
+          Welcome to <span class="gradient-text">BlazeCloud</span>
+        </h1>
+        
+        <p class="hero-subtitle">
+          Enhance your gaming experience across Minecraft, Xbox, Steam, Crunchyroll, and more with our premium services
+        </p>
+        
+        <div class="btn-group">
+          <a href="#services" class="btn-primary">Explore Services</a>
+          <a href="#community" class="btn-secondary">Join Community</a>
+        </div>
+      </div>
+    </section>
 
+    <!-- Services Section -->
+    <section id="services" class="section">
+      <div class="container">
+        <h2 class="section-title">Our Services</h2>
+        <p class="section-subtitle">Premium enhancements for your favorite platforms</p>
+        
+        <div class="grid-4">
+          <div class="service-card">
+            <div class="service-icon">⛏️</div>
+            <h3 class="service-title">Minecraft</h3>
+            <p class="service-desc">Server hosting, plugins, and custom modifications for the ultimate Minecraft experience</p>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">🎮</div>
+            <h3 class="service-title">Xbox</h3>
+            <p class="service-desc">Game Pass subscriptions, account services, and exclusive gaming perks</p>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">🎯</div>
+            <h3 class="service-title">Steam</h3>
+            <p class="service-desc">Game keys, wallet codes, and premium account enhancements</p>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">📺</div>
+            <h3 class="service-title">Crunchyroll</h3>
+            <p class="service-desc">Premium subscriptions for unlimited anime streaming</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section features-bg">
+      <div class="container">
+        <h2 class="section-title">Why Choose BlazeCloud?</h2>
+        <p class="section-subtitle">We're committed to providing the best experience for our customers</p>
+        
+        <div class="grid-3">
+          <div class="feature-item">
+            <div class="feature-icon purple">
+              <span>👥</span>
+            </div>
+            <h3 class="feature-title">Community-Driven Support</h3>
+            <p class="feature-desc">Get help from our active community and dedicated support team available 24/7</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon pink">
+              <span>⚡</span>
+            </div>
+            <h3 class="feature-title">Lightning Fast Delivery</h3>
+            <p class="feature-desc">Instant automated delivery for most services - get started in minutes, not hours</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon blue">
+              <span>💳</span>
+            </div>
+            <h3 class="feature-title">Simple Payment Methods</h3>
+            <p class="feature-desc">Multiple payment options accessible to everyone - pay your way with ease</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Community Section -->
+    <section id="community" class="section">
+      <div class="container" style="max-width: 64rem;">
+        <div class="community-box">
+          <h2 class="community-title">Join Our Community</h2>
+          <p class="community-text">
+            Connect with fellow gamers on our Discord server and play on our exclusive Minecraft server with friends and loved ones
+          </p>
+          
+          <div class="btn-group">
+            <a href="#" class="btn-discord">
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+              </svg>
+              Join Discord
+            </a>
+            <a href="#" class="btn-minecraft">⛏️ Play Minecraft</a>
+          </div>
+          
+          <div class="stats">
+            <div>
+              <div class="stat-value">5,000+</div>
+              <div class="stat-label">Community Members</div>
+            </div>
+            <div>
+              <div class="stat-value">24/7</div>
+              <div class="stat-label">Server Uptime</div>
+            </div>
+            <div>
+              <div class="stat-value">1000+</div>
+              <div class="stat-label">Happy Customers</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <h3 class="footer-title">BlazeCloud</h3>
+        <p class="footer-text">Enhancing your gaming experience</p>
+        <p class="footer-copy">© 2026 BlazeCloud. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
