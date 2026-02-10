@@ -218,6 +218,17 @@
   background-size: cover;
   background-position: center;
 }
+.section {
+  position: relative;
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
+  pointer-events: none;
+}
 
     
     .grid-3 {
